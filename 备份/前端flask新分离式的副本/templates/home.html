@@ -1,0 +1,59 @@
+
+{% extends 'Headhl.html' %}
+{% block body %}
+
+
+	<div id="right1" class="rightdiv">
+
+		{% include 'tophl.html' %}
+
+		<div id="right_bottom">
+	<dic class="wow zoomIn animated" id="right_1">仪表盘</dic>
+	<dix class="wow zoomIn animated" id="right_2"> Good to see you again</dix>
+	<divtu class="wow zoomIn animated" id="first1">
+		
+	</divtu>
+		<divtu1 class="wow zoomIn animated" id="right_3">
+		
+		</divtu1>
+		<divtu1 class="wow zoomIn animated" id="right_4" style="left: 680px;">
+		
+		</divtu1>
+			</div>
+		
+	</div>
+	
+	
+	<script type="text/javascript">
+    $(function(){
+    $("#sidebarMenu ul li").click(function() {
+        $("#sidebarMenu ul li").siblings('li').removeClass('active');  // 删除其他兄弟元素的样式
+        $(this).addClass('active');                            // 添加当前元素的样式
+		
+    });
+});
+		$(function(){
+    $("#sidebarMenu div").click(function() {
+		$("#sidebarMenu ul li").slideUp();
+		//slide down the link list below the h3 clicked - only if its closed
+		if(!$("#sidebarMenu ul li").is(":visible"))
+		{
+			$("#sidebarMenu ul li").slideDown();
+		}
+		
+	});
+		});
+		
+</script>
+	
+	<script type="text/javascript">
+function test() {
+var t = document.getElementById("right_bottom");
+	// t.classList.add('hide');
+//t.style.visibility = 'hidden';// 隐藏元素
+}
+		
+
+
+</script>
+{% endblock %}

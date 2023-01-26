@@ -1,0 +1,78 @@
+body{
+	background-color:white;
+}
+#title{
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    top:0;
+    left:0;
+
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    color: black;
+    font-size: 40px;
+}
+#title .time{
+    position: absolute;
+    left: 480px;
+    top: 80px;
+    font-size: 20px;
+    color: black;
+}
+
+#title .link{
+    position: absolute;
+    left: 20px;
+    top:35px;
+    font-size: 20px;
+    color: blue;
+    text-decoration:none;
+}
+
+/*世界地图*/
+#left1{
+    width: 65%;
+    height: 90%;
+    position: absolute;
+    left: 0;
+    top: 10%;
+}
+/*扇形图*/
+#left2{
+    width: 50%;
+    height: 60%;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+}
+/*柱形图*/
+#t1 {
+    width: 35%;
+    height: 45%;
+    position: absolute;
+    right: 0;
+    top: 10%;
+    background: white;
+}
+/*玫瑰图*/
+#t2
+{
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+/*另一个柱形图*/
+#t3
+{
+    width: 35%;
+    height: 45%;
+    position: absolute;
+    right: 0;
+    top: 55%;
+    background: white;
+}

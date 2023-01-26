@@ -1,0 +1,131 @@
+<html>
+    <!--引入jQuery包用于使用ajax-->
+    <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+
+<style>
+table{
+border-collapse:collapse;
+border: 1px solid #000000;
+width:80%;
+}
+td{
+border-collapse:collapse;
+border: 1px solid #000000;
+line-height:30px;
+}
+</style>
+</head>
+
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <h1>请输入你要查询密码的学号</h1>
+    <a href="http://8.131.54.75">仅用于学习研究，博客官网</a>
+    <h2> </h2>
+    <!--创建两个input输入框，定义id分别为name,age-->
+    <input style="height:50px;width:140px;" type="text" id="name" name="name" placeholder="学号">
+    <br>
+    
+    <!--创建button按钮，点击则激发submit()事件-->
+    <button style="height:50px;width:140px;" onclick="submit();">输入学号查询密码</button>
+    <h2> </h2>
+    <input style="height:50px;width:140px;" type="text" id="age" name="age" placeholder="姓名">
+    <br>
+    
+    <button style="height:50px;width:180px;" onclick="submit1();">输入姓名关键字查询工号/学号</button>
+    <div id="test">
+      <table border="1" cellspacing="1" cellpadding="1" id="a1">
+              
+      </table>
+     </div>
+    <script>
+        /*在这里编写submit()事件*/
+        function submit() {
+            $.ajax({
+                url: "submit", /*数据提交到submit处*/
+                type: "GET",  /*采用POST方法提交*/
+                data: { "name": $("#name").val()},  /*提交的数据（json格式），从输入框中获取*/
+                /*result为后端函数返回的json*/
+                success: function (result) {
+                    if (result.message == "success!") {
+                        alert(result.message+"你查询 "+result.username+" 的密码是"+result.name)
+                    }
+                    else {
+                        alert(result.message)
+                    }
+                }
+            });
+        }
+        function submit1() {
+            $.ajax({
+                url: "submit", /*数据提交到submit处*/
+                type: "GET",  /*采用POST方法提交*/
+                data: { "age":$("#age").val()},  /*提交的数据（json格式），从输入框中获取*/
+                /*result为后端函数返回的json*/
+                success: function (result) {
+                    if (result.message == "success!") {
+
+
+                        var sad = result.xc["members"]
+
+                        var temp ='';
+                        for(var i = 0; i < sad.length; i++) {
+                            temp +=
+                                '<tr>' +
+                                '<td>' + parseInt(i+1) + '</td>' +
+                                '<td>' + sad[i]["username"] + '</td>' +
+                                '<td>' + sad[i]["loginid"] + '</td>' +
+                                '<td>' + sad[i]["departmentfullname"] + '</td>' +
+                                '</tr>';
+                        }
+                        $("#jsonList tr:not(:first)").html("");
+                        $("#jsonList").append(temp);
+                    }
+                    else {
+                        alert(result.message)
+                    }
+                }
+            });
+        }
+    </script>
+    <body>
+<div id="createtable">
+<table border="1" cellspacing="0" bordercolor="#4bade8" cellpadding="0" id="jsonList" >
+<tr>
+<th>id</th>
+<th>姓名</th>
+<th>工号</th>
+<th>部门</th>
+</tr>
+</table>
+</div>
+<script>
+$(function(){
+var temp ='';
+$.ajax({
+type: "get",
+url: "db.json",
+dataType: "json",
+success: function(res) {
+var list = res.airdata;
+for(var i = 0; i < list.length; i++) {
+temp +=
+'<tr>' +
+'<td>' + list[i].id + '</td>' +
+'<td>' + list[i].city + '</td>' +
+'<td>' + list[i].airport + '</td>' +
+'</tr>';
+}
+$("#jsonList tr:not(:first)").html("");
+$("#jsonList").append(temp);
+}
+});
+});
+</script>
+</body>
+</html>
+
+
+
+

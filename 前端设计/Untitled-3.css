@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{
+	margin: 0;
+	padding: 0;
+}
+.box{
+	width: 300px;
+	top: 10%;
+	left: 10%;
+	display: flex;
+	position: absolute;
+}
+.ulList{
+	width: 100%;
+	display: flex;
+	left: 20%;
+	top: 20%;
+	flex-direction: column;
+	background-color: grey;
+	position: absolute;
+	list-style: none;
+}
+.liList{
+	width: 100%;
+	height:100px;
+	display: flex;
+	flex-direction: column;
+	background-color: #FF9900;
+	position: relative;
+}
+.liList p{
+	font-size: 20px;
+	text-align: center;
+}

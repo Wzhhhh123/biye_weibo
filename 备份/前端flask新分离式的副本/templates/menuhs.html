@@ -1,0 +1,113 @@
+
+<div  id="sidebarMenu">
+    <div class="imggg"><img  src="/templates/img/Logo.png"></div>
+    <div class="nameee">
+        <div1>Wzh Ay.</div1>
+        <div2>CPPU, CN</div2>
+    </div>
+
+    <ul class="sidebarMenuInner">
+        <div class="menu">主菜单</div>
+        <li onClick="Li_1()" style="margin-top:20px" class="active">
+			<span><img src="/templates/img/dashboard.png">
+			</span><a href="/">仪表盘</a> </li>
+        <li  onclick="showMessage('大屏还没设计')"><span><img src="/templates/img/apps.png">
+			</span><a>大屏展示</a></li>
+        <li onclick="showMessage('安全还没设计')"><span><img src="/templates/img/security.png">
+			</span><a href="#/anquan">安全</a></li>
+        <li onclick="showMessage('报告还没设计')"><span><img  src="/templates/img/assignment.png">
+			</span><a href="#/baogao">报告</a></li>
+        <li onclick="showMessage('用户还没设计')"><span><img src="/templates/img/people.png">
+			</span><a href="#/yonghu">用户</a></li>
+        <li class="weibohotpot"  onclick="showMessage('微博热榜')"><span><img src="/templates/img/Team.png">
+			</span><a href="/hotpot">微博热榜</a></li>
+        <li onclick="hotpotshow()"><span><img src="/templates/img/Request.png">
+			</span><a>需求</a></li>
+
+
+    </ul>
+
+    <ul class="sidebarMenuInner" style="top: 480px;">
+        <div class="menu" >工作域</div>
+        <li onclick="showMessage('图库还没设计')" style="margin-top:20px"><span><img src="/templates/img/burst_mode.png">
+			</span><a>图库</a></li>
+        <li onclick="showMessage('工作域还没设计')"><span><img src="/templates/img/Work.png">
+			</span><a>工作域</a></li>
+        <li onclick="showMessage('我的任务还没设计')"><span><img src="/templates/img/list_alt.png">
+			</span><a>我的任务</a></li>
+    </ul>
+
+    <ul class="sidebarMenuInner" style="top: 668px;">
+        <div class="menu">一般</div>
+        <li onclick="showMessage('关系网还没设计')" style="margin-top:20px"><span><img src="/templates/img/device_hub.png">
+			</span><a>关系网</a></li>
+        <li onclick="showMessage('群组还没设计')"><span><img src="/templates/img/group.png">
+			</span><a>群组</a></li>
+        <li onclick="showMessage('设置还没设计')"><span><img src="/templates/img/settings.png">
+			</span><a href="#/shezhi">设置</a></li>
+    </ul>
+</div>
+<script>
+    function Li_1() {
+        var t = document.getElementById("right_bottom");
+        t.classList.remove('hide');
+// 1. 通过hash 模式进行路由的跳转
+// hash 模式会在url后面加上#
+    }
+    // 获取reter-view 的dom
+    const routerViewEl = document.getElementsByClassName("router-view")[0];
+    // 监听URl的改变
+    class Router {
+        constructor() {
+            this.routes = {};
+            this.currentUrl = '';
+        }
+        route(path, callback) {
+            this.routes[path] = callback || function() {};
+        }
+        updateView() {
+            this.currentUrl = location.hash.slice(1) || '/';
+            this.routes[this.currentUrl] && this.routes[this.currentUrl]();
+        }
+        init() {
+            window.addEventListener('load', this.updateView.bind(this), false);
+            window.addEventListener('hashchange', this.updateView.bind(this), false);
+        }
+    }
+    const router = new Router();
+    router.init();
+    router.route('/home', function () {
+        document.getElementById('first1').innerHTML = 'tu';
+    });
+    router.route('/anquan', function () {
+        document.getElementById('first1').innerHTML = 'anquan';
+    });
+    router.route('/baogao', function () {
+        document.getElementById('first1').innerHTML = 'baogao';
+    });
+    router.route('/shezhi', function () {
+        document.getElementById('right1').innerHTML = '<iframe width="90%" height="90%" class="embed-show" src="/liuxing" allowtransparency="true" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0" scrolling="no"></iframe>';
+        this.timer =
+            setTimeout(function(){
+                asd=document.getElementById('right1')
+
+                document.getElementById('right1').innerHTML = '<iframe width="90%" height="90%" class="embed-show" src="/cake" allowtransparency="true" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0" scrolling="no"></iframe>';
+
+            },3000)
+
+
+        this.timer =
+            setTimeout(function(){
+                asd=document.getElementById('sidebarMenu')
+
+                document.getElementById('sidebarMenu').innerHTML = '<iframe width="90%" height="90%" class="embed-show" src="/boob" allowtransparency="true" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0" scrolling="no"></iframe>';
+
+            },3000)
+
+        this.timer =
+            setTimeout(function(){
+                alert("两周年快乐❕❕❕❕\n----2021年1月17日")
+            },8000)
+    });
+</script>
+<script src="/templates/cake/boob.js"></script>

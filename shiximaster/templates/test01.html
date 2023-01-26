@@ -1,0 +1,1047 @@
+﻿<html><head>
+<title>疫情数据可视化分析</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	display: inline-block; 
+	text-align: center;
+	text-decoration: none;
+	color: azure;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h2, h3, h4 {
+	font-weight: normal;
+	text-align: center;
+	line-height: 1.2;
+	padding-bottom: 10px;
+	border-bottom-style: dashed;
+}
+
+h2 {
+	border-bottom-width: 2px;
+}
+
+h3 {
+	border-bottom-width: 1px;
+}
+
+h4 {
+	border-bottom-width: 0px;
+}
+
+h1 {
+	font-weight: normal;
+	text-align: center;
+	line-height: 1.2;
+	padding-bottom: 0.3em;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style></head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/world.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-wordcloud.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
+
+
+
+
+<div style="margin-left: auto;margin-right: 
+auto;max-width: 900px;padding-left: 15px;padding-right: 15px;">
+
+
+
+
+
+
+
+
+<h2 id="part-1%E7%96%AB%E6%83%85%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%80%81%E5%8A%BF%E6%84%9F%E7%9F%A5%E8%B6%8B%E5%8A%BF%E5%88%86%E6%9E%90">Part 1：疫情空间数据数据可视化态势感知、趋势分析：</h2>
+<h3 id="%E7%96%AB%E6%83%85%E6%95%B0%E6%8D%AE%E5%8A%A8%E6%80%81%E4%BA%A4%E4%BA%92%E5%8F%AF%E8%A7%86%E5%8C%96%E5%9C%B0%E5%9B%BE">疫情数据动态交互可视化地图</h3>
+<p>共有三种地图类型：现存确诊率地图、累计死亡人数地图、死亡率（累计死亡人数/累计确诊人数）地图，可以通过下拉框进行选择；</p>
+<p>可以拖动时间轴上的滑块改变地图显示日期，范围为 1.19-5.19；</p>
+
+
+
+
+
+
+
+<div>
+    <label>请选择国家：    </label>
+    <select id="selectCountrys">
+    
+        <option value="中国">中国</option>
+    
+        <option value="美国">美国</option>
+    
+        <option value="巴西">巴西</option>
+    
+        <option value="英国">英国</option>
+    
+        <option value="俄罗斯">俄罗斯</option>
+    
+        <option value="智利">智利</option>
+    
+        <option value="印度">印度</option>
+    
+        <option value="秘鲁">秘鲁</option>
+    
+        <option value="巴基斯坦">巴基斯坦</option>
+    
+        <option value="西班牙">西班牙</option>
+    
+        <option value="孟加拉国">孟加拉国</option>
+    
+        <option value="法国">法国</option>
+    
+        <option value="沙特阿拉伯">沙特阿拉伯</option>
+    
+        <option value="瑞典">瑞典</option>
+    
+        <option value="厄瓜多尔">厄瓜多尔</option>
+    
+        <option value="南非">南非</option>
+    
+        <option value="埃及">埃及</option>
+    
+        <option value="比利时">比利时</option>
+    
+        <option value="哥伦比亚">哥伦比亚</option>
+    
+        <option value="荷兰">荷兰</option>
+    
+        <option value="伊朗">伊朗</option>
+    
+        <option value="加拿大">加拿大</option>
+    
+        <option value="印度尼西亚">印度尼西亚</option>
+    
+        <option value="土耳其">土耳其</option>
+    
+        <option value="阿根廷">阿根廷</option>
+    
+        <option value="意大利">意大利</option>
+    
+        <option value="白俄罗斯">白俄罗斯</option>
+    
+        <option value="墨西哥">墨西哥</option>
+    
+        <option value="卡塔尔">卡塔尔</option>
+    
+        <option value="阿富汗">阿富汗</option>
+    
+        <option value="菲律宾">菲律宾</option>
+    
+        <option value="乌克兰">乌克兰</option>
+    
+        <option value="玻利维亚">玻利维亚</option>
+    
+        <option value="新加坡">新加坡</option>
+    
+        <option value="波兰">波兰</option>
+    
+        <option value="阿曼">阿曼</option>
+    
+        <option value="阿联酋">阿联酋</option>
+    
+        <option value="葡萄牙">葡萄牙</option>
+    
+        <option value="伊拉克">伊拉克</option>
+    
+        <option value="尼日利亚">尼日利亚</option>
+    
+        <option value="亚美尼亚">亚美尼亚</option>
+    
+        <option value="多米尼加">多米尼加</option>
+    
+        <option value="危地马拉">危地马拉</option>
+    
+        <option value="洪都拉斯">洪都拉斯</option>
+    
+        <option value="巴拿马">巴拿马</option>
+    
+        <option value="科威特">科威特</option>
+    
+        <option value="加纳">加纳</option>
+    
+        <option value="哈萨克斯坦">哈萨克斯坦</option>
+    
+        <option value="尼泊尔">尼泊尔</option>
+    
+        <option value="摩尔多瓦">摩尔多瓦</option>
+    
+        <option value="波多黎各">波多黎各</option>
+    
+        <option value="巴林">巴林</option>
+    
+        <option value="罗马尼亚">罗马尼亚</option>
+    
+        <option value="德国">德国</option>
+    
+        <option value="阿塞拜疆">阿塞拜疆</option>
+    
+        <option value="苏丹">苏丹</option>
+    
+        <option value="刚果（金）">刚果（金）</option>
+    
+        <option value="海地">海地</option>
+    
+        <option value="以色列">以色列</option>
+    
+        <option value="喀麦隆">喀麦隆</option>
+    
+        <option value="萨尔瓦多">萨尔瓦多</option>
+    
+        <option value="科特迪瓦">科特迪瓦</option>
+    
+        <option value="埃塞俄比亚">埃塞俄比亚</option>
+    
+        <option value="委内瑞拉">委内瑞拉</option>
+    
+        <option value="肯尼亚">肯尼亚</option>
+    
+        <option value="加蓬">加蓬</option>
+    
+        <option value="北马其顿">北马其顿</option>
+    
+        <option value="保加利亚">保加利亚</option>
+    
+        <option value="阿尔及利亚">阿尔及利亚</option>
+    
+        <option value="捷克">捷克</option>
+    
+        <option value="马约特">马约特</option>
+    
+        <option value="中非共和国">中非共和国</option>
+    
+        <option value="索马里">索马里</option>
+    
+        <option value="丹麦">丹麦</option>
+    
+        <option value="塞尔维亚">塞尔维亚</option>
+    
+        <option value="哥斯达黎加">哥斯达黎加</option>
+    
+        <option value="毛里塔尼亚">毛里塔尼亚</option>
+    
+        <option value="塞内加尔">塞内加尔</option>
+    
+        <option value="南苏丹">南苏丹</option>
+    
+        <option value="古巴">古巴</option>
+    
+        <option value="尼加拉瓜">尼加拉瓜</option>
+    
+        <option value="奥地利">奥地利</option>
+    
+        <option value="希腊">希腊</option>
+    
+        <option value="乌兹别克斯坦">乌兹别克斯坦</option>
+    
+        <option value="几内亚比绍">几内亚比绍</option>
+    
+        <option value="法属圭亚那">法属圭亚那</option>
+    
+        <option value="几内亚">几内亚</option>
+    
+        <option value="韩国">韩国</option>
+    
+        <option value="吉布提">吉布提</option>
+    
+        <option value="赤道几内亚">赤道几内亚</option>
+    
+        <option value="巴拉圭">巴拉圭</option>
+    
+        <option value="匈牙利">匈牙利</option>
+    
+        <option value="马来西亚">马来西亚</option>
+    
+        <option value="爱尔兰">爱尔兰</option>
+    
+        <option value="阿尔巴尼亚">阿尔巴尼亚</option>
+    
+        <option value="马达加斯加">马达加斯加</option>
+    
+        <option value="斯里兰卡">斯里兰卡</option>
+    
+        <option value="日本">日本</option>
+    
+        <option value="摩洛哥">摩洛哥</option>
+    
+        <option value="乍得">乍得</option>
+    
+        <option value="波黑">波黑</option>
+    
+        <option value="乌干达">乌干达</option>
+    
+        <option value="圣马力诺">圣马力诺</option>
+    
+        <option value="立陶宛">立陶宛</option>
+    
+        <option value="马里">马里</option>
+    
+        <option value="爱沙尼亚">爱沙尼亚</option>
+    
+        <option value="牙买加">牙买加</option>
+    
+        <option value="芬兰">芬兰</option>
+    
+        <option value="拉脱维亚">拉脱维亚</option>
+    
+        <option value="瑞士">瑞士</option>
+    
+        <option value="吉尔吉斯斯坦">吉尔吉斯斯坦</option>
+    
+        <option value="也门共和国">也门共和国</option>
+    
+        <option value="黎巴嫩">黎巴嫩</option>
+    
+        <option value="马尔代夫">马尔代夫</option>
+    
+        <option value="塞拉利昂">塞拉利昂</option>
+    
+        <option value="留尼旺">留尼旺</option>
+    
+        <option value="佛得角">佛得角</option>
+    
+        <option value="马拉维">马拉维</option>
+    
+        <option value="刚果（布）">刚果（布）</option>
+    
+        <option value="圣多美和普林西比">圣多美和普林西比</option>
+    
+        <option value="塞浦路斯">塞浦路斯</option>
+    
+        <option value="莫桑比克">莫桑比克</option>
+    
+        <option value="澳大利亚">澳大利亚</option>
+    
+        <option value="多哥">多哥</option>
+    
+        <option value="利比亚">利比亚</option>
+    
+        <option value="挪威">挪威</option>
+    
+        <option value="利比里亚">利比里亚</option>
+    
+        <option value="安道尔">安道尔</option>
+    
+        <option value="津巴布韦">津巴布韦</option>
+    
+        <option value="坦桑尼亚">坦桑尼亚</option>
+    
+        <option value="中国">中国</option>
+    
+        <option value="马恩岛">马恩岛</option>
+    
+        <option value="卢旺达">卢旺达</option>
+    
+        <option value="泽西岛">泽西岛</option>
+    
+        <option value="约旦">约旦</option>
+    
+        <option value="马耳他">马耳他</option>
+    
+        <option value="巴勒斯坦">巴勒斯坦</option>
+    
+        <option value="斯威士兰">斯威士兰</option>
+    
+        <option value="贝宁">贝宁</option>
+    
+        <option value="根西岛">根西岛</option>
+    
+        <option value="赞比亚共和国">赞比亚共和国</option>
+    
+        <option value="苏里南">苏里南</option>
+    
+        <option value="马提尼克">马提尼克</option>
+    
+        <option value="法罗群岛">法罗群岛</option>
+    
+        <option value="布基纳法索">布基纳法索</option>
+    
+        <option value="开曼群岛">开曼群岛</option>
+    
+        <option value="尼日尔">尼日尔</option>
+    
+        <option value="直布罗陀">直布罗陀</option>
+    
+        <option value="卢森堡">卢森堡</option>
+    
+        <option value="蒙古">蒙古</option>
+    
+        <option value="关岛">关岛</option>
+    
+        <option value="格鲁吉亚">格鲁吉亚</option>
+    
+        <option value="瓜德罗普岛">瓜德罗普岛</option>
+    
+        <option value="百慕大">百慕大</option>
+    
+        <option value="叙利亚">叙利亚</option>
+    
+        <option value="乌拉圭">乌拉圭</option>
+    
+        <option value="缅甸">缅甸</option>
+    
+        <option value="钻石公主号邮轮">钻石公主号邮轮</option>
+    
+        <option value="克罗地亚">克罗地亚</option>
+    
+        <option value="斯洛伐克">斯洛伐克</option>
+    
+        <option value="圭亚那">圭亚那</option>
+    
+        <option value="特立尼达和多巴哥">特立尼达和多巴哥</option>
+    
+        <option value="泰国">泰国</option>
+    
+        <option value="布隆迪共和国">布隆迪共和国</option>
+    
+        <option value="阿鲁巴">阿鲁巴</option>
+    
+        <option value="安哥拉">安哥拉</option>
+    
+        <option value="巴哈马">巴哈马</option>
+    
+        <option value="摩纳哥">摩纳哥</option>
+    
+        <option value="巴巴多斯">巴巴多斯</option>
+    
+        <option value="法属波利尼西亚">法属波利尼西亚</option>
+    
+        <option value="突尼斯">突尼斯</option>
+    
+        <option value="厄立特里亚">厄立特里亚</option>
+    
+        <option value="越南">越南</option>
+    
+        <option value="不丹">不丹</option>
+    
+        <option value="美属维尔京群岛">美属维尔京群岛</option>
+    
+        <option value="斯洛文尼亚">斯洛文尼亚</option>
+    
+        <option value="荷属圣马丁">荷属圣马丁</option>
+    
+        <option value="博茨瓦纳">博茨瓦纳</option>
+    
+        <option value="冰岛">冰岛</option>
+    
+        <option value="圣马丁岛">圣马丁岛</option>
+    
+        <option value="纳米比亚">纳米比亚</option>
+    
+        <option value="北马里亚纳群岛联邦">北马里亚纳群岛联邦</option>
+    
+        <option value="列支敦士登">列支敦士登</option>
+    
+        <option value="圣文森特和格林纳丁斯">圣文森特和格林纳丁斯</option>
+    
+        <option value="冈比亚">冈比亚</option>
+    
+        <option value="东帝汶">东帝汶</option>
+    
+        <option value="安提瓜和巴布达">安提瓜和巴布达</option>
+    
+        <option value="格林那达">格林那达</option>
+    
+        <option value="库拉索岛">库拉索岛</option>
+    
+        <option value="新喀里多尼亚">新喀里多尼亚</option>
+    
+        <option value="伯利兹">伯利兹</option>
+    
+        <option value="圣卢西亚">圣卢西亚</option>
+    
+        <option value="老挝">老挝</option>
+    
+        <option value="斐济">斐济</option>
+    
+        <option value="多米尼克">多米尼克</option>
+    
+        <option value="圣其茨和尼维斯">圣其茨和尼维斯</option>
+    
+        <option value="格陵兰">格陵兰</option>
+    
+        <option value="福克兰群岛">福克兰群岛</option>
+    
+        <option value="梵蒂冈">梵蒂冈</option>
+    
+        <option value="特克斯和凯科斯群岛">特克斯和凯科斯群岛</option>
+    
+        <option value="塞舌尔">塞舌尔</option>
+    
+        <option value="蒙特塞拉特">蒙特塞拉特</option>
+    
+        <option value="文莱">文莱</option>
+    
+        <option value="巴布亚新几内亚">巴布亚新几内亚</option>
+    
+        <option value="英属维尔京群岛">英属维尔京群岛</option>
+    
+        <option value="荷兰加勒比地区">荷兰加勒比地区</option>
+    
+        <option value="柬埔寨">柬埔寨</option>
+    
+        <option value="圣巴泰勒米岛">圣巴泰勒米岛</option>
+    
+        <option value="安圭拉">安圭拉</option>
+    
+        <option value="毛里求斯">毛里求斯</option>
+    
+        <option value="黑山">黑山</option>
+    
+        <option value="圣皮埃尔和密克隆群岛">圣皮埃尔和密克隆群岛</option>
+    
+        <option value="新西兰">新西兰</option>
+    
+    </select>
+    <div id="lines" style="width: 1000px; height: 600px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663484163779"><div style="position: relative; width: 1000px; height: 600px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1250" height="750" style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 5px; left: 630px; top: 185px; pointer-events: none;">治愈数据<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#d48265;"></span>20200424: 78,362</div></div>
+</div>
+<div id="04cd225d9bb642288bef9788ed998f30" class="chart-container" style="width: 500px; height: 300px; display: inline-block; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663483995528"><div style="position: relative; width: 500px; height: 300px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="625" height="375" style="position: absolute; left: 0px; top: 0px; width: 500px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 5px; left: 461px; top: 150px; pointer-events: none;"><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:rgba(80,163,186,1);"></span>6</div></div>
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/templates/calendar.js"></script>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+<div>
+
+
+
+
+</div>
+
+<table>
+
+
+</table>
+
+
+
+
+
+
+<p></p>
+
+<p></p>
+<p></p>
+
+
+
+
+
+<p></p>
+
+<p></p>
+
+
+
+
+
+
+<div>
+    
+    <script type="text/javascript" src="/templates/wordcloud.js"></script>
+</div>
+
+
+
+<div>
+    <div>
+        
+        
+    </div>
+    <div id="wordcloud" style="width: 1000px; height: 600px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663484163780"><div style="position: relative; width: 1000px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"></div></div>
+</div>
+<ul>
+
+
+</ul>
+
+<p></p>
+
+<p></p>
+
+
+
+
+
+
+
+
+
+
+
+<p></p>
+<script type="text/javascript" src="/templates/render.js"></script>
+
+<div>
+    <div>
+        
+        
+    </div>
+    <div id="weibocloud" style="width: 1000px; height: 600px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663484163781"><div style="position: relative; width: 1000px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"></div></div>
+</div>
+
+
+
+
+
+<div>
+	
+	<script type="text/javascript" src="/templates/weibolines.js"></script>
+</div>
+<p></p>
+
+
+</div>
+
+<script type="text/javascript" src="/templates/render.js"></script>
+
+
+<div id="phraseJoinewrskdfdswerhnyikyofd" data-v-app=""><!----><!----><!----></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div></body></html>

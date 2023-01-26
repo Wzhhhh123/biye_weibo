@@ -1,0 +1,1095 @@
+﻿<html><head>
+<title>疫情数据可视化分析</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	display: inline-block; 
+	text-align: center;
+	text-decoration: none;
+	color: azure;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h2, h3, h4 {
+	font-weight: normal;
+	text-align: center;
+	line-height: 1.2;
+	padding-bottom: 10px;
+	border-bottom-style: dashed;
+}
+
+h2 {
+	border-bottom-width: 2px;
+}
+
+h3 {
+	border-bottom-width: 1px;
+}
+
+h4 {
+	border-bottom-width: 0px;
+}
+
+h1 {
+	font-weight: normal;
+	text-align: center;
+	line-height: 1.2;
+	padding-bottom: 0.3em;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style><style id="__web-inspector-hide-shortcut-style__">
+.__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *, .__web-inspector-hidebefore-shortcut__::before, .__web-inspector-hideafter-shortcut__::after
+{
+    visibility: hidden !important;
+}
+</style><style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style></head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/world.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-wordcloud.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
+
+
+
+<div style="margin-left: auto;margin-right: 
+auto;max-width: 900px;padding-left: 15px;padding-right: 15px;">
+
+<h1 id="%E7%96%AB%E6%83%85%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E4%B8%8E%E8%88%86%E6%83%85%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%8F%AF%E8%A7%86%E5%8C%96" hidden="hidden">疫情空间数据与舆情数据分析可视化</h1>
+<p hidden="hidden">新型冠状病毒肺炎（COVID-19，简称“新冠肺炎”）疫情肆虐全球多个国家，2020年3月11日，世界卫生组织 (WHO) 正式宣布将新冠肺炎列为全球性大流行病。</p>
+
+
+<h2 id="%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86" hidden="hidden">所使用的数据集：</h2>
+
+
+
+
+
+
+<div id="current-maps" hidden="hidden">
+    <div>
+        <label>请选择地图类型:     </label>
+        <select name="select-map" id="mapselecter">
+            <option value="0">现存确诊人数</option>
+            <option value="1">累计死亡人数</option>
+            <option value="2">死亡率（死亡/确诊）</option>
+        </select>
+    </div>
+    <div>
+        <label>拖动滑块即可切换日期:</label>
+        <input id="slider" style="width: 400px;vertical-align: middle;" type="range" min="0" max="121" step="1">
+    </div>
+    <div id="worldMap" class="maps" style="width: 800px; height: 600px; display: inline-block; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663485826248" hidden="hidden"><div style="position: relative; width: 800px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1000" height="750" style="position: absolute; left: 0px; top: 0px; width: 800px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+    <div id="chinaMap" class="maps" style="width: 800px; height: 600px; display: inline-block; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663485826249"><div style="position: relative; width: 800px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1000" height="750" style="position: absolute; left: 0px; top: 0px; width: 800px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+</div>
+<div id="current-maps" hidden="hidden">
+    <div>
+        <label>请选择地图类型:     </label>
+        <select name="select-map" id="mapselecter">
+            <option value="0">现存确诊人数</option>
+            <option value="1">累计死亡人数</option>
+            <option value="2">死亡率（死亡/确诊）</option>
+        </select>
+    </div>
+    <div>
+        <label>拖动滑块即可切换日期:</label>
+        <input id="slider" style="width: 400px;vertical-align: middle;" type="range" min="0" max="121" step="1">
+    </div>
+    <div id="worldMap" class="maps" style="width: 800px; height: 600px; display: inline-block; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663483029495"><div style="position: relative; width: 800px; height: 600px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1000" height="750" style="position: absolute; left: 0px; top: 0px; width: 800px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 5px; left: 659px; top: 390px; pointer-events: none;">Australia: 843</div></div>
+    <div id="chinaMap" class="maps" style="width: 800px; height: 600px; display: inline-block; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663483029496"><div style="position: relative; width: 800px; height: 600px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1000" height="750" style="position: absolute; left: 0px; top: 0px; width: 800px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+</div>
+
+
+
+<h3 id="%E4%B8%96%E7%95%8C%E7%96%AB%E6%83%85%E6%95%B0%E6%8D%AE%E6%9B%B2%E7%BA%BF%E5%9B%BE">世界疫情数据曲线图</h3>
+<p>通过曲线图可直观地表现出确诊数据、死亡数据、治愈数据等的变化趋势，可以通过下拉框进行选择所显示的国家：</p>
+<div>
+    <label>请选择国家：    </label>
+    <select id="selectCountrys">
+    
+        <option value="中国">中国</option>
+    
+        <option value="美国">美国</option>
+    
+        <option value="巴西">巴西</option>
+    
+        <option value="英国">英国</option>
+    
+        <option value="俄罗斯">俄罗斯</option>
+    
+        <option value="智利">智利</option>
+    
+        <option value="印度">印度</option>
+    
+        <option value="秘鲁">秘鲁</option>
+    
+        <option value="巴基斯坦">巴基斯坦</option>
+    
+        <option value="西班牙">西班牙</option>
+    
+        <option value="孟加拉国">孟加拉国</option>
+    
+        <option value="法国">法国</option>
+    
+        <option value="沙特阿拉伯">沙特阿拉伯</option>
+    
+        <option value="瑞典">瑞典</option>
+    
+        <option value="厄瓜多尔">厄瓜多尔</option>
+    
+        <option value="南非">南非</option>
+    
+        <option value="埃及">埃及</option>
+    
+        <option value="比利时">比利时</option>
+    
+        <option value="哥伦比亚">哥伦比亚</option>
+    
+        <option value="荷兰">荷兰</option>
+    
+        <option value="伊朗">伊朗</option>
+    
+        <option value="加拿大">加拿大</option>
+    
+        <option value="印度尼西亚">印度尼西亚</option>
+    
+        <option value="土耳其">土耳其</option>
+    
+        <option value="阿根廷">阿根廷</option>
+    
+        <option value="意大利">意大利</option>
+    
+        <option value="白俄罗斯">白俄罗斯</option>
+    
+        <option value="墨西哥">墨西哥</option>
+    
+        <option value="卡塔尔">卡塔尔</option>
+    
+        <option value="阿富汗">阿富汗</option>
+    
+        <option value="菲律宾">菲律宾</option>
+    
+        <option value="乌克兰">乌克兰</option>
+    
+        <option value="玻利维亚">玻利维亚</option>
+    
+        <option value="新加坡">新加坡</option>
+    
+        <option value="波兰">波兰</option>
+    
+        <option value="阿曼">阿曼</option>
+    
+        <option value="阿联酋">阿联酋</option>
+    
+        <option value="葡萄牙">葡萄牙</option>
+    
+        <option value="伊拉克">伊拉克</option>
+    
+        <option value="尼日利亚">尼日利亚</option>
+    
+        <option value="亚美尼亚">亚美尼亚</option>
+    
+        <option value="多米尼加">多米尼加</option>
+    
+        <option value="危地马拉">危地马拉</option>
+    
+        <option value="洪都拉斯">洪都拉斯</option>
+    
+        <option value="巴拿马">巴拿马</option>
+    
+        <option value="科威特">科威特</option>
+    
+        <option value="加纳">加纳</option>
+    
+        <option value="哈萨克斯坦">哈萨克斯坦</option>
+    
+        <option value="尼泊尔">尼泊尔</option>
+    
+        <option value="摩尔多瓦">摩尔多瓦</option>
+    
+        <option value="波多黎各">波多黎各</option>
+    
+        <option value="巴林">巴林</option>
+    
+        <option value="罗马尼亚">罗马尼亚</option>
+    
+        <option value="德国">德国</option>
+    
+        <option value="阿塞拜疆">阿塞拜疆</option>
+    
+        <option value="苏丹">苏丹</option>
+    
+        <option value="刚果（金）">刚果（金）</option>
+    
+        <option value="海地">海地</option>
+    
+        <option value="以色列">以色列</option>
+    
+        <option value="喀麦隆">喀麦隆</option>
+    
+        <option value="萨尔瓦多">萨尔瓦多</option>
+    
+        <option value="科特迪瓦">科特迪瓦</option>
+    
+        <option value="埃塞俄比亚">埃塞俄比亚</option>
+    
+        <option value="委内瑞拉">委内瑞拉</option>
+    
+        <option value="肯尼亚">肯尼亚</option>
+    
+        <option value="加蓬">加蓬</option>
+    
+        <option value="北马其顿">北马其顿</option>
+    
+        <option value="保加利亚">保加利亚</option>
+    
+        <option value="阿尔及利亚">阿尔及利亚</option>
+    
+        <option value="捷克">捷克</option>
+    
+        <option value="马约特">马约特</option>
+    
+        <option value="中非共和国">中非共和国</option>
+    
+        <option value="索马里">索马里</option>
+    
+        <option value="丹麦">丹麦</option>
+    
+        <option value="塞尔维亚">塞尔维亚</option>
+    
+        <option value="哥斯达黎加">哥斯达黎加</option>
+    
+        <option value="毛里塔尼亚">毛里塔尼亚</option>
+    
+        <option value="塞内加尔">塞内加尔</option>
+    
+        <option value="南苏丹">南苏丹</option>
+    
+        <option value="古巴">古巴</option>
+    
+        <option value="尼加拉瓜">尼加拉瓜</option>
+    
+        <option value="奥地利">奥地利</option>
+    
+        <option value="希腊">希腊</option>
+    
+        <option value="乌兹别克斯坦">乌兹别克斯坦</option>
+    
+        <option value="几内亚比绍">几内亚比绍</option>
+    
+        <option value="法属圭亚那">法属圭亚那</option>
+    
+        <option value="几内亚">几内亚</option>
+    
+        <option value="韩国">韩国</option>
+    
+        <option value="吉布提">吉布提</option>
+    
+        <option value="赤道几内亚">赤道几内亚</option>
+    
+        <option value="巴拉圭">巴拉圭</option>
+    
+        <option value="匈牙利">匈牙利</option>
+    
+        <option value="马来西亚">马来西亚</option>
+    
+        <option value="爱尔兰">爱尔兰</option>
+    
+        <option value="阿尔巴尼亚">阿尔巴尼亚</option>
+    
+        <option value="马达加斯加">马达加斯加</option>
+    
+        <option value="斯里兰卡">斯里兰卡</option>
+    
+        <option value="日本">日本</option>
+    
+        <option value="摩洛哥">摩洛哥</option>
+    
+        <option value="乍得">乍得</option>
+    
+        <option value="波黑">波黑</option>
+    
+        <option value="乌干达">乌干达</option>
+    
+        <option value="圣马力诺">圣马力诺</option>
+    
+        <option value="立陶宛">立陶宛</option>
+    
+        <option value="马里">马里</option>
+    
+        <option value="爱沙尼亚">爱沙尼亚</option>
+    
+        <option value="牙买加">牙买加</option>
+    
+        <option value="芬兰">芬兰</option>
+    
+        <option value="拉脱维亚">拉脱维亚</option>
+    
+        <option value="瑞士">瑞士</option>
+    
+        <option value="吉尔吉斯斯坦">吉尔吉斯斯坦</option>
+    
+        <option value="也门共和国">也门共和国</option>
+    
+        <option value="黎巴嫩">黎巴嫩</option>
+    
+        <option value="马尔代夫">马尔代夫</option>
+    
+        <option value="塞拉利昂">塞拉利昂</option>
+    
+        <option value="留尼旺">留尼旺</option>
+    
+        <option value="佛得角">佛得角</option>
+    
+        <option value="马拉维">马拉维</option>
+    
+        <option value="刚果（布）">刚果（布）</option>
+    
+        <option value="圣多美和普林西比">圣多美和普林西比</option>
+    
+        <option value="塞浦路斯">塞浦路斯</option>
+    
+        <option value="莫桑比克">莫桑比克</option>
+    
+        <option value="澳大利亚">澳大利亚</option>
+    
+        <option value="多哥">多哥</option>
+    
+        <option value="利比亚">利比亚</option>
+    
+        <option value="挪威">挪威</option>
+    
+        <option value="利比里亚">利比里亚</option>
+    
+        <option value="安道尔">安道尔</option>
+    
+        <option value="津巴布韦">津巴布韦</option>
+    
+        <option value="坦桑尼亚">坦桑尼亚</option>
+    
+        <option value="中国">中国</option>
+    
+        <option value="马恩岛">马恩岛</option>
+    
+        <option value="卢旺达">卢旺达</option>
+    
+        <option value="泽西岛">泽西岛</option>
+    
+        <option value="约旦">约旦</option>
+    
+        <option value="马耳他">马耳他</option>
+    
+        <option value="巴勒斯坦">巴勒斯坦</option>
+    
+        <option value="斯威士兰">斯威士兰</option>
+    
+        <option value="贝宁">贝宁</option>
+    
+        <option value="根西岛">根西岛</option>
+    
+        <option value="赞比亚共和国">赞比亚共和国</option>
+    
+        <option value="苏里南">苏里南</option>
+    
+        <option value="马提尼克">马提尼克</option>
+    
+        <option value="法罗群岛">法罗群岛</option>
+    
+        <option value="布基纳法索">布基纳法索</option>
+    
+        <option value="开曼群岛">开曼群岛</option>
+    
+        <option value="尼日尔">尼日尔</option>
+    
+        <option value="直布罗陀">直布罗陀</option>
+    
+        <option value="卢森堡">卢森堡</option>
+    
+        <option value="蒙古">蒙古</option>
+    
+        <option value="关岛">关岛</option>
+    
+        <option value="格鲁吉亚">格鲁吉亚</option>
+    
+        <option value="瓜德罗普岛">瓜德罗普岛</option>
+    
+        <option value="百慕大">百慕大</option>
+    
+        <option value="叙利亚">叙利亚</option>
+    
+        <option value="乌拉圭">乌拉圭</option>
+    
+        <option value="缅甸">缅甸</option>
+    
+        <option value="钻石公主号邮轮">钻石公主号邮轮</option>
+    
+        <option value="克罗地亚">克罗地亚</option>
+    
+        <option value="斯洛伐克">斯洛伐克</option>
+    
+        <option value="圭亚那">圭亚那</option>
+    
+        <option value="特立尼达和多巴哥">特立尼达和多巴哥</option>
+    
+        <option value="泰国">泰国</option>
+    
+        <option value="布隆迪共和国">布隆迪共和国</option>
+    
+        <option value="阿鲁巴">阿鲁巴</option>
+    
+        <option value="安哥拉">安哥拉</option>
+    
+        <option value="巴哈马">巴哈马</option>
+    
+        <option value="摩纳哥">摩纳哥</option>
+    
+        <option value="巴巴多斯">巴巴多斯</option>
+    
+        <option value="法属波利尼西亚">法属波利尼西亚</option>
+    
+        <option value="突尼斯">突尼斯</option>
+    
+        <option value="厄立特里亚">厄立特里亚</option>
+    
+        <option value="越南">越南</option>
+    
+        <option value="不丹">不丹</option>
+    
+        <option value="美属维尔京群岛">美属维尔京群岛</option>
+    
+        <option value="斯洛文尼亚">斯洛文尼亚</option>
+    
+        <option value="荷属圣马丁">荷属圣马丁</option>
+    
+        <option value="博茨瓦纳">博茨瓦纳</option>
+    
+        <option value="冰岛">冰岛</option>
+    
+        <option value="圣马丁岛">圣马丁岛</option>
+    
+        <option value="纳米比亚">纳米比亚</option>
+    
+        <option value="北马里亚纳群岛联邦">北马里亚纳群岛联邦</option>
+    
+        <option value="列支敦士登">列支敦士登</option>
+    
+        <option value="圣文森特和格林纳丁斯">圣文森特和格林纳丁斯</option>
+    
+        <option value="冈比亚">冈比亚</option>
+    
+        <option value="东帝汶">东帝汶</option>
+    
+        <option value="安提瓜和巴布达">安提瓜和巴布达</option>
+    
+        <option value="格林那达">格林那达</option>
+    
+        <option value="库拉索岛">库拉索岛</option>
+    
+        <option value="新喀里多尼亚">新喀里多尼亚</option>
+    
+        <option value="伯利兹">伯利兹</option>
+    
+        <option value="圣卢西亚">圣卢西亚</option>
+    
+        <option value="老挝">老挝</option>
+    
+        <option value="斐济">斐济</option>
+    
+        <option value="多米尼克">多米尼克</option>
+    
+        <option value="圣其茨和尼维斯">圣其茨和尼维斯</option>
+    
+        <option value="格陵兰">格陵兰</option>
+    
+        <option value="福克兰群岛">福克兰群岛</option>
+    
+        <option value="梵蒂冈">梵蒂冈</option>
+    
+        <option value="特克斯和凯科斯群岛">特克斯和凯科斯群岛</option>
+    
+        <option value="塞舌尔">塞舌尔</option>
+    
+        <option value="蒙特塞拉特">蒙特塞拉特</option>
+    
+        <option value="文莱">文莱</option>
+    
+        <option value="巴布亚新几内亚">巴布亚新几内亚</option>
+    
+        <option value="英属维尔京群岛">英属维尔京群岛</option>
+    
+        <option value="荷兰加勒比地区">荷兰加勒比地区</option>
+    
+        <option value="柬埔寨">柬埔寨</option>
+    
+        <option value="圣巴泰勒米岛">圣巴泰勒米岛</option>
+    
+        <option value="安圭拉">安圭拉</option>
+    
+        <option value="毛里求斯">毛里求斯</option>
+    
+        <option value="黑山">黑山</option>
+    
+        <option value="圣皮埃尔和密克隆群岛">圣皮埃尔和密克隆群岛</option>
+    
+        <option value="新西兰">新西兰</option>
+    
+    </select>
+    <div id="lines" style="width: 1000px; height: 600px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663485826250"><div style="position: relative; width: 1000px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1250" height="750" style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+</div>
+<p>通过交互分析，可以将疫情数据趋势分为几种类别：</p>
+<ul>
+<li>疫情已经得到控制，如中国：</li>
+<li>疫情数据还在保持增长趋势，如美国、俄罗斯；</li>
+<li>疫情基本得到控制，现存确诊数在逐步减少，如意大利；</li>
+<li>数据太少，如多米尼克；</li>
+</ul>
+<p>同时也可以发现：</p>
+<ul>
+<li>由于检测技术或标准变化，可能出现确诊数据在短时间内的大量增多，也有的国家是每隔一段时间集中增加一次确诊数据；</li>
+<li>截止5.20，大多数国家的疫情还在上升趋势；</li>
+</ul>
+<h3 id="%E5%85%A8%E5%9B%BD%E7%96%AB%E6%83%85%E6%96%B0%E5%A2%9E%E7%A1%AE%E8%AF%8A%E4%BA%BA%E6%95%B0%E6%97%A5%E5%8E%86%E5%9B%BE">全国疫情新增确诊人数日历图</h3>
+<p>日历图也可以直观的反映出当日疫情新增人数的多少；</p>
+<div id="04cd225d9bb642288bef9788ed998f30" class="chart-container" style="width: 500px; height: 300px; display: inline-block; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663485826246"><div style="position: relative; width: 500px; height: 300px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="625" height="375" style="position: absolute; left: 0px; top: 0px; width: 500px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+<script type="text/javascript" src="/templates/calendar.js"></script>
+<p class="__web-inspector-hide-shortcut__">可以看到，确诊人数的增多从一月底开始，在二月中旬达到高峰后逐步回落；而三月下旬增加人数又有一次较小的上升。</p>
+
+<h4 id="logistic%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95" hidden="hidden">logistic回归算法</h4>
+<p class="__web-inspector-hide-shortcut__">（1）模型描述：当一个物种迁入到一个新生态系统中后，其数量会发生变化。假设该物种的起始数量小于环境的最大容纳量，则数量会增长。该物种在此生态系统中有天敌、食物、空间等资源也不足（非理想环境），则增长函数满足逻辑斯谛方程，图像呈S形，此方程是描述在资源有限的条件下种群增长规律的一个最佳数学模型。</p>
+
+
+<img src="/templates/results/logistic_china.png" style="width:600px;" class="__web-inspector-hide-shortcut__">
+<p class="__web-inspector-hide-shortcut__">本次拟合采用了1月11日到1月27日的累计确诊病例数据作为原始数据，采用最小二乘法拟合逻辑斯蒂曲线，最后经过对逻辑斯蒂模型中R值（增长速率，到达K值的速度）的拟合调整，发现在0.45附近得到的曲线比较贴合我国1月至2月疫情实际情况。从短期来看，2月9日的预测值在4万左右，与实际情况十分贴近，也证明了模型的一定可靠性；但从长期来看，最终值还是相对偏低。</p>
+<p class="__web-inspector-hide-shortcut__">可以将本模型推广，进行全球范围内典型新冠肺炎爆发国家的疫情拟合与未来疫情预测，同时将通过R值的大小反应出该国疫情应对的有效程度：</p>
+<p class="__web-inspector-hide-shortcut__">以下分别是对日本、美国、中国、德国从1.19至5.19的疫情数据进行的拟合和预测：</p>
+<div class="__web-inspector-hide-shortcut__">
+<img src="/templates/results/logistic_world.png" style="width:400px;display: inline-block;">
+<img src="/templates/results/logistic_american.png" style="width:400px;display: inline-block;">
+<img src="/templates/results/logistic_china1.png" style="width:400px;display: inline-block;">
+<img src="/templates/results/logistic_german.png" style="width:400px;display: inline-block;">
+</div>
+<p class="__web-inspector-hide-shortcut__">R值：</p>
+<table class="__web-inspector-hide-shortcut__">
+<thead>
+<tr>
+<th>国家</th>
+<th style="text-align:center">中国</th>
+<th style="text-align:center">美国</th>
+<th style="text-align:center">英国</th>
+<th style="text-align:center">德国</th>
+<th style="text-align:center">意大利</th>
+<th style="text-align:center">韩国</th>
+<th style="text-align:right">日本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R</td>
+<td style="text-align:center">0.25</td>
+<td style="text-align:center">0.05</td>
+<td style="text-align:center">0.08</td>
+<td style="text-align:center">0.09</td>
+<td style="text-align:center">0.08</td>
+<td style="text-align:center">0.11</td>
+<td style="text-align:right">0.08</td>
+</tr>
+</tbody>
+</table>
+<p class="__web-inspector-hide-shortcut__">关于R值的补充说明：逻辑斯蒂模型中R值代表的增长速率不是传统意义上理解的种群增长速度，而是接近种群数量达到环境承载力K值的速度。强烈的人为干预可以<strong>大幅度降低K值</strong>，使得种群数量快速达到最大值附近，疫情扩散得以控制。所以本模型在预测各国最终累计感染人数的功能之外，拟合过程中R值的大小可以反映某个国家面对新冠肺炎采取措施的<strong>有效性和效率</strong>。一般来说，R值越大，该国防疫措施越有效。</p>
+<h4 id="seitr%E6%A8%A1%E5%9E%8B" class="__web-inspector-hide-shortcut__">SEITR模型：</h4>
+<p class="__web-inspector-hide-shortcut__">（1）模型简介：SEITR模型是基于动力学SEIR模型不断调试模拟的结果，能够比较合理贴合传染病传播的一般规律。</p>
+
+<p class="__web-inspector-hide-shortcut__">我们先来看看SEIR模型：</p>
+<img src="/templates/results/seirgraphy.png" class="__web-inspector-hide-shortcut__">
+<p class="__web-inspector-hide-shortcut__">1）模型中的4类人群：N为总人数
+SUSCEPTIBLES: 用S表示，为易感者, 潜在的可感染人群
+EXPOSED：用E表示，为潜伏者, 已经被感染但是没有表现出来的人群
+INFECTIVES: 用I表示，为感染者, 表现出感染症状的人
+RESISTANCES: 用R表示，为抵抗者, 感染者痊愈后获得抗性的人</p>
+<img src="/templates/results/equation.svg" class="__web-inspector-hide-shortcut__">
+<p class="__web-inspector-hide-shortcut__">2）模型中的3种参数：
+αß：易感人群（S) 被感染人员（I) 传染的传染率，相当于单人次易感者接触感染者而被感染的几率（ß）与易感者单位时间内接触的感染者人数（α）的乘积
+γ：感染人群（I) 以固定平均速率恢复（R) 或死亡的恢复率
+Ω：潜伏人群（E) 变为感染者的平均速率，通常数值取潜伏期的倒数</p>
+<p class="__web-inspector-hide-shortcut__">3）增加修正的参数：
+“T”：已被感染且正处于接受治疗时期的人群，主要特征表现为已被感染，已过潜伏期，但不会进行传染，且正在被治疗。
+同时也将I人群严格定义为被感染，已过潜伏期但未被医院收治无法接受治疗的人群。
+δ，表示I变为T的速率，主要受医院接诊速率及收治能力影响，也受发病后及时就医的时间影响。</p>
+<p class="__web-inspector-hide-shortcut__">以下使用SEITR模型对美国疫情基本得到控制的时间进行预测。</p>
+<img src="/templates/results/seir.png" style="width:600px;" class="__web-inspector-hide-shortcut__">
+<p class="__web-inspector-hide-shortcut__">模型拟合评价：</p>
+<p class="__web-inspector-hide-shortcut__">（1）参数的设置：</p>
+<p class="__web-inspector-hide-shortcut__">1）传染率系数与人与人之间的社交距离和社交频率息息相关，美国在疫情早期未及时向民众宣传保持社交距离和戴口罩、减少出行的建议，导致传染率系数会比参数设置的更高；</p>
+<p class="__web-inspector-hide-shortcut__">2）治疗系数与当地医疗水平、卫生设施数量、医疗物资等息息相关，疫情中期各州的医疗设备全面告急，医护人员感染率上升，同时中产阶级及以下家庭因为无法支付高昂医疗费选择在家隔离，错过最佳治疗期，使得治疗系数要低于已经有雷神山火神山的武汉对应时期的治疗系数；</p>
+<p class="__web-inspector-hide-shortcut__">（2）结果分析：
+主要的预测在于感染人数逐渐趋于0的时间节点，本次预测得到的结果是今年秋季美国的疫情能够基本得到控制。</p>
+<p>（3）拟合分析；
+本模型在尝试同时拟合现有病例（正在接受治疗人群）和治愈人数曲线时，发现无法做到相对同时拟合的比较贴合实际的结果。分析可知，（1）中的参数对拟合结果的影响非常大，而模型参数的选择需要结合美国实际疫情情况才能推算，目前使用的计算手段过于粗糙；同时该模型的假设条件是，美国的0号病人出现在今年1月11日，但是目前的报告陆续显示早在2019年美国就有社区性传播，因此本模型的可靠性大大下降。由于具体的时间目前国际上无法追溯，所以进一步的研究很难继续进行。</p>
+<h2 id="part-2-%E7%96%AB%E6%83%85%E8%88%86%E6%83%85%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96">part 2: 疫情舆情数据分析与可视化</h2>
+<h3 id="%E6%96%B0%E9%97%BB%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96">新闻数据分析与可视化</h3>
+<h4 id="%E4%B8%AD%E5%9B%BD%E7%A4%BE%E4%BC%9A%E7%BB%84%E7%BB%87%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0%E7%96%AB%E6%83%85%E9%98%B2%E6%8E%A7%E4%B8%93%E5%8C%BA%E6%96%B0%E9%97%BB%E8%AF%8D%E4%BA%91%E5%8F%AF%E8%A7%86%E5%8C%96">中国社会组织公共服务平台疫情防控专区新闻词云可视化：</h4>
+<p>我们通过爬虫技术，对中国社会组织公共服务平台疫情防控专区新闻进行了抓取，共计获得了 1-26 至 5-19 时间段内共1400+新闻；</p>
+<p>词云图，也叫文字云，是对文本中出现频率较高的“关键词”予以视觉化的展现，词云图过滤掉大量的低频低质的文本信息，使得浏览者只要一眼扫过文本就可领略文本的主旨。</p>
+<p>对该平台上发布的所有文章使用jieba进行分词、获取主题词（取排名前00位），并渲染词云图：</p>
+<div>
+    <div id="c61d88ede2df46799724e4ef261fa76f" class="chart-container" style="width: 900px; height: 500px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663485826247"><div style="position: relative; width: 900px; height: 500px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1125" height="625" style="position: absolute; left: 0px; top: 0px; width: 900px; height: 500px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+    <script type="text/javascript" src="/templates/wordcloud.js"></script>
+</div>
+<p>可以看到，“疫情”、“防控”、“组织”、“工作”等词语较为突出，这也和平台的主旨相吻合；</p>
+<p>对不同日期的文章集合分别渲染词云图，可以直观地看出新闻主题随着时间的变化；</p>
+<p>可通过拖动滑块改变日期范围，每个日期范围内有约100篇新闻；</p>
+<div>
+    <div>
+        <label>拖动滑块即可切换日期:</label>
+        <input id="sliderWord" style="width: 400px;vertical-align: middle;" type="range" min="0" max="90" step="1">
+    </div>
+    <div id="wordcloud" style="width: 1000px; height: 600px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663485826251"><div style="position: relative; width: 1000px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1250" height="750" style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+</div>
+<ul>
+<li>疫情前期主题词以“防控”、“组织”、“工作”、“社会”为主，对应于主要的抗疫力量为政府动员工作和社会组织捐赠</li>
+<li>后期“企业”，“复工”等词语占比越来越大，也对应着复工成为主要需求；</li>
+</ul>
+<h4 id="tf-idf%E5%80%BC">TF-IDF值</h4>
+<p>TF-IDF（Term Frequency-InversDocument Frequency）是一种常用于信息处理和数据挖掘的加权技术。该技术采用一种统计方法，根据字词的在文本中出现的次数和在整个语料中出现的文档频率来计算一个字词在整个语料中的重要程度。它的优点是能过滤掉一些常见的却无关紧要本的词语，同时保留影响整个文本的重要字词。</p>
+<p>TF - IDF = TF * IDF</p>
+<p>TF（Term Frequency）表示某个关键词在整篇文章中出现的频率。IDF（InversDocument Frequency）表示计算倒文本频率。文本频率是指某个关键词在整个语料所有文章中出现的次数。倒文档频率又称为逆文档频率，它是文档频率的倒数，主要用于降低所有文档中一些常见却对文档影响不大的词语的作用。</p>
+<img src="/templates/results/tfidf.png" style="width:600px;">
+<p>输出结果如下图所示，可以看到“疫情”、“组织”、“捐赠”、“社会”、“协会”、“肺炎”、“物资”等都是高频词，也是大众普
+遍关心的主题。</p>
+<h4 id="%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90">层次聚类分析</h4>
+<p>对主题词进行层次聚类分析，层次聚类法的基本过程如下：</p>
+<ul>
+<li>每一个样本点视为一个簇；</li>
+<li>计算各个簇之间的距离，最近的两个簇聚合成一个新簇；</li>
+<li>重复以上过程直至最后只有一簇。</li>
+</ul>
+<p>层次聚类不指定具体的簇数，而只关注簇之间的远近，最终会形成一个树形图，可以表明相应关键词间的联系：</p>
+<img src="/templates/results/Tree_word_50.png" style="width:1000px;">
+<p>可以明显地观察到，主题词可以分为三类，大致对应于三个主题板块：</p>
+<ul>
+<li>医院获取物资捐款、志愿者行动</li>
+<li>企业复工复产</li>
+<li>社会组织抗击疫情</li>
+</ul>
+<h3 id="%E5%BE%AE%E5%8D%9A%E8%88%86%E6%83%85%E5%88%86%E6%9E%90%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96">微博舆情分析与数据可视化</h3>
+<h4 id="%E5%BE%AE%E5%8D%9A%E4%B8%BB%E9%A2%98%E8%AF%8D%E8%AF%8D%E4%BA%91%E5%9B%BE">微博主题词词云图：</h4>
+<p>依据与“新冠肺炎”相关的230个主题关键词进行随机数据采集的2020年1月1日—2020年2月20日期间共计100万条微博数据进行主题词计算，可绘制微博主题词词云图：</p>
+<script type="text/javascript" src="/templates/render.js"></script>
+<p>分别对于每日的微博主题词进行分析，可绘制微博每日主题词词云图：</p>
+<div>
+    <div>
+        <label>拖动滑块即可切换日期:</label>
+        <input id="sliderWeibo" style="width: 400px;vertical-align: middle;" type="range" min="0" max="49" step="1">
+    </div>
+    <div id="weibocloud" style="width: 1000px; height: 600px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663485826253"><div style="position: relative; width: 1000px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1250" height="750" style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+</div>
+<p>通过可视化交互分析可以发现：</p>
+<ul>
+<li>在疫情尚未大面积出现的前期，收集到的疫情相关主题词主要为2020、发烧、肺炎、穿山甲等等，疫情有关词语占主题词比例相对较少，主题词相对较为分散；其中也夹杂部分早期出现的如病毒性等描述；</li>
+<li>在1月12号左右，冠状病毒、肺炎等词语数量开始远大于其他非疫情相关词语；</li>
+<li>在1.23，随着武汉封城，武汉这一词汇提及次数也显著增大；</li>
+<li>在1月底二月初，疫情、新冠等词语也频繁被提及；加油这一词语也十分显著，表明了全国人民同疫情斗争的决心和对武汉的美好祝愿；</li>
+<li>该词云图也可以显著的反应出舆论热点，如2.6左右的李文亮医生去世事件就可以观察到李文亮一词在词云图中显著展示；</li>
+<li>肖战一词占比较少，但始终在词云图中出现，也许表明了在疫情期间仍然对于明星有一定的关注流量；</li>
+</ul>
+<h4 id="%E5%BE%AE%E5%8D%9A%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90">微博情感分析</h4>
+<p>对微博数据采用snowNLP进行情感分析得出的情感数值，范围为-0.5 ~ 0.5，大于0为正面情感，小于0为负面情感；</p>
+<p>绘制每日平均情感数值曲线图：</p>
+<div>
+	<div id="e8865e65e86c410f9666c9b174426b7d" class="chart-container" style="width: 900px; height: 500px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1663485826252"><div style="position: relative; width: 900px; height: 500px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1125" height="625" style="position: absolute; left: 0px; top: 0px; width: 900px; height: 500px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+	<script type="text/javascript" src="/templates/weibolines.js"></script>
+</div>
+<p>总体而言，疫情相关的微博情感倾向还是偏正面或中性；在1.19前，情感平均值较高，约为0.2；在1.19，疫情开始在全国扩散开来并且钟南山宣布人传人之后，情感平均值下降到了0，1附近；在2.18、2.19时，可能由于疫情国内接近拐点，情感分析数值又有显著提高；</p>
+<p>其他分析和代码详见notebook；</p>
+
+</div>
+
+<script type="text/javascript" src="/templates/render.js"></script>
+
+
+<div id="phraseJoinewrskdfdswerhnyikyofd" data-v-app=""><!----><!----><!----></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div><div id="phraseJoinewrskdfdswerhnyikyofd"></div></body></html>

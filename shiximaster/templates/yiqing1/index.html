@@ -1,0 +1,107 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/templates/yiqing1/css/index.css">
+    <style>
+        #box ul li{
+            background:url(/templates/yiqing1/img/1.jpg) no-repeat;
+            width:120px; height:115px;
+            float:left; cursor:pointer;
+        }
+        #box ul li.active{background:url(/templates/yiqing1/img/1.jpg) 0px -115px;}
+    </style>
+    <script src="/templates/yiqing1/js/echarts.min.js"></script>
+    <script src="/templates/yiqing1/js/jquery.min.js"></script>
+    <script src="/templates/yiqing1/js/index.js"></script>
+<style type="text/css">
+      @font-face {
+          font-family: "element-icons";
+          src: url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.woff') format('woff'),
+          url('chrome-extension://dkbiiofameebehokbgjmdcholafphbnl/fonts/element-icons.ttf ') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      }
+  </style></head>
+<body>
+<div id="title">出行安全指数评测</div>
+<div id="content">
+    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+    <b> 请您选择省份：</b>
+<select id="province" style="width: 120px ;align-content: center;" size="1">
+    <option value="0">北京</option>
+    <option value="1">天津</option>
+    <option value="2">上海</option>
+    <option value="3">重庆</option>
+    <option value="4">福建</option>
+    <option value="5">西藏</option>
+    <option value="6">贵州</option>
+    <option value="7">湖北</option>
+    <option value="8">湖南</option>
+    <option value="9">广东</option>
+    <option value="10">安徽</option>
+    <option value="11">四川</option>
+    <option value="12">新疆</option>
+    <option value="13">江苏</option>
+    <option value="14">吉林</option>
+    <option value="15">宁夏</option>
+    <option value="16">河北</option>
+    <option value="17">河南</option>
+    <option value="18">广西</option>
+    <option value="19">海南</option>
+    <option value="20">江西</option>
+    <option value="21">云南</option>
+    <option value="22">甘肃</option>
+    <option value="23">山东</option>
+    <option value="24">陕西</option>
+    <option value="25">浙江</option>
+    <option value="26">内蒙</option>
+    <option value="27">青海</option>
+    <option value="28">辽宁</option>
+    <option value="29">黑龙江</option>
+    <option value="30">山西</option>
+    <option value="31">台湾</option>
+    <option value="32">澳门</option>
+    <option value="33">香港</option>
+</select><br>
+    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+<b>请您选择城市：</b>
+<select id="city" style="width: 120px" size="1">
+<option value="丰台">丰台</option><option value="海淀">海淀</option><option value="西城">西城</option><option value="房山">房山</option><option value="东城">东城</option><option value="大兴">大兴</option><option value="通州">通州</option><option value="顺义">顺义</option><option value="昌平">昌平</option><option value="密云">密云</option><option value="怀柔">怀柔</option><option value="石景山">石景山</option><option value="延庆">延庆</option><option value="门头沟">门头沟</option><option value="平谷区">平谷区</option></select><br>
+    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+    <b>您选择的结果是：</b><span id="result" style="color: red">北京省丰台市</span>
+<input type="button" value="确定" onclick="myClick()">
+<br>
+    <br><br>
+<div id="box">
+    <ul>
+        <li class=""></li>
+        <li class=""></li>
+        <li class=""></li>
+        <li class=""></li>
+        <li class=""></li>
+    </ul>
+</div>
+<div id="display"><br>出行安全指数：0，评语：不宜出行<br><br>该市（区）新增确诊人数:0,该市（区）现有确诊人数:59</div>
+</div>
+<div id="left2" _echarts_instance_="ec_1664442083124" style="-webkit-tap-highlight-color: transparent; user-select: none; background: transparent;"><div style="position: relative; overflow: hidden; width: 364px; height: 428px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas width="364" height="428" data-zr-dom-id="zr_0" style="position: absolute;left: 0px;top: 0px;width: 364px;height: 428px;user-select: none;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);padding: 0px;margin: 0px;border-width: 0px;"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 5px; left: 123px; top: 71px;">09.18<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#c23531;"></span>新增确诊: 40,686<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#2f4554;"></span>新增疑似: 0<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#61a0a8;"></span>新增境外输入: 48</div></div>
+<div id="imgs">
+<iframe width="100%" height="90%" name="abcd" class="embed-show" src="" allowtransparency="true" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0" scrolling="yes" __idm_id__="2269185"></iframe>
+
+</div>
+<div id="new">
+    <h2>新闻：</h2>
+    <br>
+    <a href="https://news.cctv.com/2022/09/28/ARTIoEEhH96hULgGI7lGOnRS220928.shtml" target="abcd">张工主持召开市政府专题工作会议 扛起责任坚定信心 全力打赢疫情防控攻坚战</a>
+    <br>
+    <a href="https://news.cctv.com/2022/09/27/ARTIRE9QlAIoJxaGye0E1fQm220927.shtml" target="abcd">9月28日零时起，上海疫情风险区“清零”，全市实施常态化防控措施</a>
+    <br>
+    <a href="https://news.cctv.com/2022/09/27/ARTIgErxoOzwqDSrVFKFgNlL220927.shtml" target="abcd">北京房山法院：租用冷库违规存放冻带鱼致丰台房山疫情传播，4人获刑</a>
+    <br>
+    <a href="https://news.cctv.com/2022/09/27/ARTInJYf1HSGmLqZvjurt1eY220927.shtml" target="abcd">李鸿忠连夜深入滨海新区检查调度疫情处置工作 坚持以快制快 迅速遏制疫情扩散蔓延势头</a>
+    <br>
+    <a href="https://news.cctv.com/2022/09/25/ARTIVoqfEFPhQhMeAIVQNCnN220925.shtml" target="abcd">新冠肺炎疫情防控 | 海南三亚本轮疫情高风险区清零</a>
+    <br>
+    <a href="https://news.cctv.com/2022/09/27/ARTILt8vgZMpVGnTUGK8kguF220927.shtml" target="abcd">三亚：有序恢复全市常态化疫情防控管理</a>
+    <br>
+    <a href="https://news.cctv.com/2022/09/22/ARTIpqTMWh0YIJRBlpQHBX8A220922.shtml" target="abcd">疫情防控工作中履职不力，毕节4人被立案审查</a>
+</div>
+
+<div id="phraseJoinewrskdfdswerhnyikyofd" data-v-app=""><!----><!----><!----></div></body></html>

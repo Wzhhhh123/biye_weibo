@@ -1,0 +1,16 @@
+{"startsWith":"android"}
+{"startsWith":"java"}
+{"startsWith":"org"}
+{"startsWith":"huawei"}
+{"startsWith":"libcore"}
+{"contains":"android"}
+{"endsWith":""}
+
+
+{"startsWith":"java"}
+{"startsWith":"dalvik"}
+{"startsWith":"org"}
+{"startsWith":"libcore"}
+{"contains":"android"}
+{"contains":"huawei"}
+{"endsWith":""}

@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>微博主题画像平台</title>
+	<link rel="stylesheet" type="text/css" res="stylesheet" href="Untitled-2.css">
+	<script src="js/jquAB25.js"></script>
+	<script src="js/massage.js"></script>
+	<link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div  id="sidebarMenu">
+	<div class="imggg"><img  src="img/Logo.png"></div>
+		<div class="nameee">
+		<div1>Wzh Ay.</div1>
+		<div2>CPPU, CN</div2>
+		</div>
+		
+    <ul class="sidebarMenuInner">
+		<div class="menu">主菜单</div>
+		<li onClick="Li_1()" style="margin-top:20px" class="active">
+			<span><img src="img/dashboard.png">
+			</span><a href="#/home">仪表盘</a> </li>
+		<li  onclick="showMessage('大屏还没设计')"><span><img src="img/apps.png">
+			</span><a>大屏展示</a></li>
+		<li onclick="showMessage('安全还没设计')"><span><img src="img/security.png">
+			</span><a href="#/anquan">安全</a></li>
+		<li onclick="showMessage('报告还没设计')"><span><img  src="img/assignment.png">
+			</span><a href="#/baogao">报告</a></li>
+		<li onclick="showMessage('用户还没设计')"><span><img src="img/people.png">
+			</span><a href="#/yonghu">用户</a></li>
+		<li onclick="showMessage('团队还没设计')"><span><img src="img/Team.png">
+			</span><a>团队</a></li>
+		<li onclick="showMessage('需求还没设计')"><span><img src="img/Request.png">
+			</span><a>需求</a></li>
+		
+
+    </ul>
+		
+	<ul class="sidebarMenuInner" style="top: 480px;">
+		<div class="menu" >工作域</div>
+		<li onclick="showMessage('图库还没设计')" style="margin-top:20px"><span><img src="img/burst_mode.png">
+			</span><a>图库</a></li>
+		<li onclick="showMessage('工作域还没设计')"><span><img src="img/Work.png">
+			</span><a>工作域</a></li>
+		<li onclick="showMessage('我的任务还没设计')"><span><img src="img/list_alt.png">
+			</span><a>我的任务</a></li>		
+		</ul>
+		
+		<ul class="sidebarMenuInner" style="top: 668px;">
+			<div class="menu">一般</div>
+		<li onclick="showMessage('关系网还没设计')" style="margin-top:20px"><span><img src="img/device_hub.png">
+			</span><a>关系网</a></li>
+		<li onclick="showMessage('群组还没设计')"><span><img src="img/group.png">
+			</span><a>群组</a></li>
+		<li onclick="showMessage('设置还没设计')"><span><img src="img/settings.png">
+			</span><a>设置</a></li>		
+		</ul>
+  </div>
+	<div id="right1" class="rightdiv">
+	  <div>
+		<search><img style="margin-top: 10px;margin-left: 12px" src="img/search.png"><input value="搜索"></search>
+		<div>
+		  <div style="right: 369px;top: 28px"><img src="img/notifications.png"><a>3</a></div>
+		  <div class="wow zoomIn animated" style="right: 310px;top: 24px"><img  src="img/Avatar.png" width="30px"></div>
+		  <div style="right: 268px;top: 28px"><img  src="img/arrow_drop_down.png"></div>
+		  <div style="position: fixed;width: 32px;height: 32px;right: 180px;background: rgba(0, 133, 255, 0.1);border-radius: 256px;flex: none;order: 0;flex-grow: 0;
+margin: 0px 8px;" >
+				<div style="position: absolute;width: 8px;height: 20px;left: 10.5px;top: 6px;bottom: 6px;color: rgb(0, 133, 255);font-family: Inter;font-size: 13px;font-weight: 500;line-height: 20px;letter-spacing: 0%;text-align: center;">魏</div>
+			</div><div style="right: 24px;top: 28px"><c style="position: fixed;width: 58px;right: 106px;height: 24px;
+color: rgb(28, 28, 28);font-family: Inter;font-size: 16px;font-weight: 500;line-height: 24px;letter-spacing: 0%;text-align: left;display: flex;flex-direction: row;justify;content: flex-start;align-items: center;padding: 0px;flex: none;order: 1;flex-grow: 0;margin: 0px 8px;"><strong>Weizhihao</strong></c>
+			</div>
+		  <div style="right: 28px;top: 30px"><img  src="img/arrow_drop_down.png"></div>
+	    </div>
+		 
+		</div>
+		<div id="right_bottom">
+	<dic class="wow zoomIn animated" id="right_1">仪表盘</dic>
+	<dix class="wow zoomIn animated" id="right_2"> Good to see you again</dix>
+	<divtu class="wow zoomIn animated" id="first1">
+		
+	</divtu>
+		<divtu1 class="wow zoomIn animated" id="right_3">
+		
+		</divtu1>
+		<divtu1 class="wow zoomIn animated" id="right_4" style="left: 680px;">
+		
+		</divtu1>
+			</div>
+		
+	</div>
+	
+	
+	<script type="text/javascript">
+    $(function(){
+    $("#sidebarMenu ul li").click(function() {
+        $("#sidebarMenu ul li").siblings('li').removeClass('active');  // 删除其他兄弟元素的样式
+        $(this).addClass('active');                            // 添加当前元素的样式
+		
+    });
+});
+		$(function(){
+    $("#sidebarMenu div").click(function() {
+		$("#sidebarMenu ul li").slideUp();
+		//slide down the link list below the h3 clicked - only if its closed
+		if(!$("#sidebarMenu ul li").is(":visible"))
+		{
+			$("#sidebarMenu ul li").slideDown();
+		}
+		
+	});
+		});
+		
+</script>
+	
+	<script type="text/javascript">
+function test() {
+var t = document.getElementById("right_bottom");
+	t.classList.add('hide');
+//t.style.visibility = 'hidden';// 隐藏元素
+}
+		
+function Li_1()	{
+	var t = document.getElementById("right_bottom");
+	t.classList.remove('hide');
+//	t.style.visibility = 'visible';// 显示元素
+}
+// 1. 通过hash 模式进行路由的跳转
+// hash 模式会在url后面加上# 
+ 
+// 获取reter-view 的dom
+const routerViewEl = document.getElementsByClassName("router-view")[0];
+// 监听URl的改变
+class Router {
+  constructor() {
+    this.routes = {};
+    this.currentUrl = '';
+  }
+  route(path, callback) {
+    this.routes[path] = callback || function() {};
+  }
+  updateView() {
+    this.currentUrl = location.hash.slice(1) || '/';
+    this.routes[this.currentUrl] && this.routes[this.currentUrl]();
+  }
+  init() {
+    window.addEventListener('load', this.updateView.bind(this), false);
+    window.addEventListener('hashchange', this.updateView.bind(this), false);
+  }
+}
+const router = new Router();
+  router.init();
+  router.route('/home', function () {
+    document.getElementById('first1').innerHTML = 'tu';
+  });
+  router.route('/anquan', function () {
+    document.getElementById('first1').innerHTML = 'anquan';
+  });
+  router.route('/baogao', function () {
+    document.getElementById('first1').innerHTML = 'baogao';
+  });
+  router.route('/yonghu', function () {
+    document.getElementById('first1').innerHTML = 'yonghu';
+  });
+
+</script>
+</body>
+</html>

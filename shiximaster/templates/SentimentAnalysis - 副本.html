@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="echarts.js"></script>
+    <style>
+        #mainBody {
+            width: 1000px;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 50px;
+            margin-bottom: 100px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<!-- 头部 -->
+<header>
+
+    <div class="container">
+        <!-- nav 部分 -->
+        <section class="nav">
+
+            
+        </section>
+    </div>
+</header>
+
+<div id="mainBody">
+
+    <section id="main" style="width: 900px;height: 700px;"></section>
+</div>
+
+</body>
+<script>
+    let myChart = echarts.init(document.getElementById("main"))
+
+    let option = {
+        title: {
+            text: "我国地区情感得分折线图（平均值）",
+            subtext: "Figure 3 Line graph of regional sentiment scores in my country (average value)",
+            left: "center"
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            left: 'right', //位置
+            icon: "rect", //形状  类型包括 circle，rect,line，roundRect，triangle，diamond，pin，arrow，none
+            itemWidth: 20, // 设置宽度
+            itemHeight: 10, // 设置高度
+            itemGap: 50, // 设置间距
+            data: [{%
+                for key, value in data.items() %} {{
+                    key | tojson
+                }}, {% endfor %}],
+            textStyle: {
+                //文字样式
+                color: "#B4CEFF",
+                fontSize: "12"
+            },
+            left: '15%',
+            bottom: "0%",
+
+        },
+        grid: {
+            left: '5%',
+            right: '5%',
+            bottom: '8%',
+            containLabel: true
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {
+                    show: true,
+                    readOnly: false
+                },
+                magicType: {
+                    show: true,
+                    type: ['line', 'bar']
+                },
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    show: true
+                }
+            }
+        },
+
+        xAxis: {
+            name: "时间[2021年]",
+            type: 'category',
+            boundaryGap: false,
+            nameGap: 30, // x轴name与横坐标轴线的间距
+            nameLocation: "middle", // x轴name处于x轴的什么位置
+            data: [{%
+                for i in date %} {{
+                    i | tojson
+                }}, {%
+                endfor %}],
+
+            nameTextStyle: { // x轴name的样式调整
+                color: '#000',
+                fontSize: 20,
+            },
+        },
+        yAxis: {
+            name: "情感得分",
+            type: 'value',
+            min: 0.5,
+            max: 0.9,
+            nameGap: 30, // x轴name与横坐标轴线的间距
+            nameLocation: "middle", // x轴name处于x轴的什么位置
+            nameTextStyle: { // x轴name的样式调整
+                color: '#000',
+                fontSize: 20,
+            },
+        },
+
+        series: [{% for key,value in data.items() %} {
+            name: {{key | tojson}},
+            type: 'line',
+            {#stack: 'Total',#}
+            data: {{value | safe}},
+            showSymbol: false,
+            encode: {
+                x: 'Year',
+                y: 'Income',
+                itemName: 'Year',
+                tooltip: ['Income']
+            }
+        },
+        {% endfor %}
+        ]
+    }
+
+    myChart.setOption(option)
+</script>
+
+</html>
