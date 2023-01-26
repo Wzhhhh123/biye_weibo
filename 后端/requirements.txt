@@ -1,0 +1,9 @@
+pandas
+pymysql
+flask
+requests
+pyecharts
+flask_cors
+pyquery
+emoji
+demoji
