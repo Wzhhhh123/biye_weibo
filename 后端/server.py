@@ -36,6 +36,20 @@ def date2str(date,date_formate = "%Y%m%d"):
 @app.route('/')
 def index():
     return render_template('home.html')
+
+@app.route('/login.html')
+def login():
+    return render_template('/SK2/login.html')
+
+@app.route('/register.html')
+def register():
+    return render_template('/SK2/register.html')
+
+@app.route('/forgot-password.html')
+def forgot():
+    return render_template('/SK2/forgot-password.html')
+
+
 @app.route('/hotpot')
 def index2():
     db = MysqlUtil()
@@ -62,7 +76,9 @@ def submit():
     numbers=count_number
     return numbers
 
- 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('SK2/404.html'), 404
 
 @app.route('/changecountry', methods=['POST', 'GET'])
 def changeCountry():
