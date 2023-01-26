@@ -107,8 +107,18 @@ def indqwex():
     count_eventsnumber = db.fetchall(sql_6)
     db = MysqlUtil()
     count_hotnumber = db.fetchall(sql_7)
+    sql_8=f'SELECT count(`id`) as t FROM `weiboevents` WHERE gender="f"'
+    db = MysqlUtil()
+    count_famale = (db.fetchall(sql_8)[0]['t']/count_eventsnumber[0]['t'])*100
+    count_male = 100-count_famale
+    sql_9=f'SELECT count(`id`) as t FROM `weiboevents` WHERE `status_country`="中国" OR `status_country`!="中国"'
+    db = MysqlUtil()
+    zhan_1=db.fetchall(sql_9)[0]['t']
+    sql_10=f'SELECT count(`id`) as t FROM `weiboevents` WHERE `status_country`="中国" '
+    db = MysqlUtil()
+    zhanbiCHI=round((db.fetchall(sql_10)[0]['t']/zhan_1)*100,1)
 
-    return render_template('SK2/index.html', articles=articles, page=int(page), numbers=count_number, count_eventsnumber=count_eventsnumber ,count_hotnumber=count_hotnumber)  # 渲染模板
+    return render_template('SK2/index.html', articles=articles, page=int(page), numbers=count_number, count_eventsnumber=count_eventsnumber ,count_hotnumber=count_hotnumber,f=count_famale,m=count_male,chi=zhanbiCHI)  # 渲染模板
 
 @app.route('/table/events')
 def tableEvent():
