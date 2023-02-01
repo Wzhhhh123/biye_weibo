@@ -1,9 +1,9 @@
-pandas
-pymysql
-flask
-requests
-pyecharts
-flask_cors
-pyquery
+pandas==1.5.2
+pymysql==1.0.2
+flask==2.2.2
+requests==2.18.4
+pyecharts==2.0.1
+flask_cors==3.0.10
+pyquery==2.0.0
 emoji
 demoji
