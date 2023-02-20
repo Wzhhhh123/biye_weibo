@@ -39,9 +39,27 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">欢迎回来</h1>
                   </div>
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                  <div class="message-info" style="margin-top:80px">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                  {% endwith %}
+
+                  {% if error %}
+                  <div class="alert alert-danger">{{error}}</div>
+                  {% endif %}
+
+                  {% if msg %}
+                  <div class="alert alert-success">{{msg}}</div>
+                  {% endif %}
+
                   <form class="user">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="输入邮箱">
+                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="输入账号">
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="输入密码">

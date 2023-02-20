@@ -146,7 +146,7 @@ def radar1():
 
 
 @app.route('/DH')
-@is_logged_in
+# @is_logged_in
 def indqwex():
     db = MysqlUtil()  # 实例化数据库操作类
     page = request.args.get('page')  # 获取当前页码
@@ -203,6 +203,7 @@ def tableEventdetail():
     return render_template('SK2/tablesdetail.html', articles=articles, title=title) # 渲染模板
 
 @app.route('/table/add')
+@is_logged_in
 def tableaddEvent():
     db = MysqlUtil()
     page = request.args.get('page')
@@ -416,8 +417,9 @@ def graph1():
     ll = request.args.get('ll')
     return graph(title,ll).dump_options_with_quotes()
 @app.route('/for_add')
+@is_logged_in
 def for_addfor():
-    from flask import Flask,flash
+
     wid = request.args.get('wid')
 
     if wid == "" or wid == None:
