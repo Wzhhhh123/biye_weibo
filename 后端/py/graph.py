@@ -31,19 +31,7 @@ def graph(title,ll):
     for i in range(len(kk)):
         dict_name_fan[id]=kk[i]
         id=id+1
-    jsontext = {"categories":[],"nodes":[],"links":[]}
-    jsontext["categories"]=[{'name': '类目0'},{'name': '类目1'},{'name': '类目2'},{'name': '类目3'},{'name': '类目4'},{'name': '类目5'},{'name': '类目6'},{'name': '类目7'},{'name': '类目8'}]
-    for row in kk:
-        id=id-1
-        jsontext["nodes"].append({'id': dict_name[row],
-      'name': row,
-      'symbolSize': 15,
-      'label': {'normal': {'show': True}},
-      'category': random.randint(0,7)})
-        id=id+1
-    for row in count_number:
-        jsontext["links"].append({'source': dict_name[row['source']], 'target': dict_name[row['target']] ,'time':row['publish_time'].strftime("%Y-%m-%d %H:%M:%S")})
-        id=id+1
+
     jsontext = {"categories":[],"nodes":[],"links":[]}
     jsontext["categories"]=[{'name': '类目0'},{'name': '类目1'},{'name': '类目2'},{'name': '类目3'},{'name': '类目4'},{'name': '类目5'},{'name': '类目6'},{'name': '类目7'},{'name': '类目8'}]
     for row in kk:

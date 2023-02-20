@@ -479,6 +479,10 @@ def daoru2():
         db.insert(sql)
     return jsonify({"name": wid, "value": kk})
 
+@app.route("/echart")
+def echart():
+    title = request.args.get('title')
+    return render_template('daping/index.html',title=title)
 
 
 if __name__ == "__main__":
