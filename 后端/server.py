@@ -292,7 +292,6 @@ def daoru():
 
         ss=list_of_csv[kk][5]
         import demoji
-        demoji.download_codes()
         res = emoji.replace_emoji(ss, replace=" ")
         if res!=ss:
             for o in demoji.findall(ss).values():
@@ -303,6 +302,8 @@ def daoru():
                            VALUES ('%s', '%s', '%s', '%s', '%s', '%s','%s','%s','%s','%s','%d','%d','%d')" % (list_of_csv[kk][-1], list_of_csv[kk][-2], list_of_csv[kk][-3], list_of_csv[kk][0], title,list_of_csv[kk][2],list_of_csv[kk][1],list_of_csv[kk][3],list_of_csv[kk][4],list_of_csv[kk][5],int(list_of_csv[kk][6]),int(list_of_csv[kk][7]),int(list_of_csv[kk][8]))
         db = MysqlUtil()
         db.insert(sql)
+    global count
+    count = 0
     return jsonify({"name": event, "value": kk})
 
 
