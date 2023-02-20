@@ -2,7 +2,7 @@ import json
 from random import randrange
 from mysql_util import MysqlUtil
 from flask.json import jsonify
-from flask import Flask, render_template,url_for,request
+from flask import Flask, render_template,url_for,request,session,flash,redirect
 import pandas as pd
 import requests
 import re
@@ -19,9 +19,21 @@ from py.sankey import sankey
 from py.weibo import time_formater,get_single_page,getLongText,parse_page,kaishi
 from py.graph import graph
 from py.forp import forpa,get_single_page1,parse_page1,parse_page_twice,parse_page_third
+from functools import wraps
 import random
 app = Flask(__name__, static_folder="templates")
 CORS(app, resources=r'/*')
+app.config["SECRET_KEY"] = '79537d00f4834892986f09a100aa1edf'
+def is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:  # 判断用户是否登录
+            return f(*args, **kwargs)  # 如果登录，继续执行被装饰的函数
+        else:  # 如果没有登录，提示无权访问
+            flash('无权访问，请先登录', 'danger')
+            return redirect(url_for('login'))
+    return wrap
+
 def date_delta(date,gap,formate = "%Y%m%d"):
         date = str2date(date)
         pre_date = date + datetime.timedelta(days=-gap)
@@ -37,9 +49,43 @@ def date2str(date,date_formate = "%Y%m%d"):
 def index():
     return render_template('home.html')
 
+
+# 用户登录
+@app.route('/login', methods=['GET', 'POST'])
+def login1():
+    username = request.args.get("name")
+    password_candidate = request.args.get("passwd")
+    sql = "SELECT * FROM users  WHERE username = '%s'" % (username)  # 根据用户名查找user表中记录
+    db = MysqlUtil()  # 实例化数据库操作类
+    result = db.fetchone(sql)  # 获取一条记录
+    try:
+        password = result['password']  # 用户填写的密码
+    except:
+        return {'message':'用户名和密码不匹配！'}
+    # 对比用户填写的密码和数据库中记录密码是否一致
+    # if sha256_crypt.verify(password_candidate, password):  # 调用verify方法验证，如果为真，验证通过
+    if password == password_candidate:
+        # 写入session
+        session['logged_in'] = True
+        session['username'] = username
+        return {'message':'登陆成功！'}
+    else:  # 如果密码错误
+
+        return {'message':'用户名和密码不匹配！'}
+
+
+
 @app.route('/login.html')
 def login():
+    if "logged_in" in session:  # 如果已经登录，则直接跳转到控制台
+        return redirect(url_for("indqwex"))
     return render_template('/SK2/login.html')
+
+@app.route('/logout/')
+@is_logged_in
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 @app.route('/register.html')
 def register():
@@ -100,6 +146,7 @@ def radar1():
 
 
 @app.route('/DH')
+@is_logged_in
 def indqwex():
     db = MysqlUtil()  # 实例化数据库操作类
     page = request.args.get('page')  # 获取当前页码

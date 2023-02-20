@@ -52,7 +52,7 @@
                         <label class="custom-control-label" for="customCheck">记住密码</label>
                       </div>
                     </div>
-                    <a href="/DH" class="btn btn-primary btn-user btn-block">
+                    <a id="loginn" class="btn btn-primary btn-user btn-block">
                       登陆
                     </a>
                     <hr>
@@ -81,7 +81,25 @@
     </div>
 
   </div>
+<script>
+  let btn=document.getElementById('loginn');
+  btn.addEventListener("click",hello1);
 
+  function hello1(){
+    $.ajax({
+      type: "GET",
+      url: "/login",
+      data: {"name": $("#exampleInputEmail").val(), "passwd": $("#exampleInputPassword").val()},
+      success: function (result) {
+        alert(result.message)
+        if (result.message == '登陆成功！'){
+          window.location.replace('/DH')
+        }
+
+      }
+    });
+  }
+</script>
   <!-- Bootstrap core JavaScript-->
   <script src="/templates/SK2/vendor/jquery/jquery.min.js"></script>
   <script src="/templates/SK2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
