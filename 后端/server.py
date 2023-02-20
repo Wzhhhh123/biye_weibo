@@ -48,8 +48,15 @@ def date2str(date,date_formate = "%Y%m%d"):
 @app.route('/')
 def index():
     return render_template('home.html')
-
-
+@app.route('/regist1', methods=['GET', 'POST'])
+def regist1():
+    username = request.args.get("name")
+    password = request.args.get("passwd")
+    db = MysqlUtil()
+    sql = "INSERT INTO users(username,password) \
+                                VALUES ('%s', '%s')" % (username,password)  # 插入数据的SQL语句
+    db.insert(sql)
+    return {'message':'注册成功'}
 # 用户登录
 @app.route('/login', methods=['GET', 'POST'])
 def login1():
@@ -70,7 +77,6 @@ def login1():
         session['username'] = username
         return {'message':'登陆成功！'}
     else:  # 如果密码错误
-
         return {'message':'用户名和密码不匹配！'}
 
 
@@ -85,7 +91,7 @@ def login():
 @is_logged_in
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('indqwex'))
 
 @app.route('/register.html')
 def register():

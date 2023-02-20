@@ -44,7 +44,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="邮箱地址">
+                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="账号">
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
@@ -54,7 +54,7 @@
                     <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="确认密码">
                   </div>
                 </div>
-                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                <a id="regost" class="btn btn-primary btn-user btn-block">
                   注册账户
                 </a>
                 <hr>
@@ -79,7 +79,28 @@
     </div>
 
   </div>
+<script>
+  let btn=document.getElementById('regost');
+  btn.addEventListener("click",hello1);
 
+  function hello1(){
+    $.ajax({
+      type: "GET",
+      url: "/regist1",
+      data: {"name": $("#exampleInputEmail").val(), "passwd": $("#exampleInputPassword").val()},
+      success: function (result) {
+        alert(result.message)
+        if (result.message == '注册成功'){
+          window.location.replace('/login.html')
+        }
+        else{
+          alert("注册失败")
+        }
+
+      }
+    });
+  }
+</script>
   <!-- Bootstrap core JavaScript-->
   <script src="/templates/SK2/vendor/jquery/jquery.min.js"></script>
   <script src="/templates/SK2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
