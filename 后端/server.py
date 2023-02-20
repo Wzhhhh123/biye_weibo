@@ -474,7 +474,7 @@ def daoru2():
 
 
         sql = "INSERT INTO weiboforword(wid,title,source,target,value,publish_time) \
-                           VALUES ('%s', '%s', '%s', '%s','%s','%s')" % (list_of_csv[kk][0],list_of_csv[1][2],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4])
+                           VALUES ('%s', '%s', '%s', '%s','%s','%s')" % (list_of_csv[kk][0],wid,list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4])
         db = MysqlUtil()
         db.insert(sql)
     return jsonify({"name": wid, "value": kk})

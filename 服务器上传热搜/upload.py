@@ -25,7 +25,7 @@ class MysqlUtil():
         '''
             初始化方法，连接数据库
         '''
-        host = '192.168.8.161'  # 主机名
+        host = '192.168.1.11'  # 主机名
         user = 'root'  # 数据库用户名
         password = '8008'  # 数据库密码
         database = 'weibo'  # 数据库名称
@@ -235,7 +235,7 @@ def updateReadme(rank):
     Returns:
         None
     '''
-    filename = '/root/flask/123.txt'
+    filename = '123.txt'
 
     line = '1. [{title}]({href}) {hot}'
     lines = [line.format(title=k, hot=v['hot'], href=v['href'])
