@@ -85,7 +85,7 @@ def login():
 @is_logged_in
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('indqwex'))
 
 @app.route('/register.html')
 def register():
@@ -421,18 +421,18 @@ def graph1():
 def for_addfor():
 
     wid = request.args.get('wid')
-
+    flash12 = ""
     if wid == "" or wid == None:
         ll = "SK2/forword_add.html"
-        flash="请输入mid"
+        flash12="请输入mid"
     elif len(wid) == 9 or len(wid) == 16:
 
         ll = "SK2/forword_add_pa.html"
     else:
         print(len(wid))
-        flash="请检查mid是否正确"
+        flash12="请检查mid是否正确"
         ll = "SK2/forword_add.html"
-    return render_template(ll,flash=flash,wid=wid)
+    return render_template(ll,flash12=flash12,wid=wid)
 
 @app.route('/addf',methods=["GET", "POST"])
 def addfor():
