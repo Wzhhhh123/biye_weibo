@@ -21,6 +21,21 @@ from py.graph import graph
 from py.forp import forpa,get_single_page1,parse_page1,parse_page_twice,parse_page_third
 from functools import wraps
 import random
+
+# 按日期分热度
+# select
+#
+# 	date_format(publish_time, '%Y-%m-%d') AS days,
+#     COUNT(1) AS total
+# from
+# 	weiboevents
+# WHERE title="张新成 受伤"
+# group by
+# 	days
+# order by days desc
+
+
+
 app = Flask(__name__, static_folder="templates")
 CORS(app, resources=r'/*')
 app.config["SECRET_KEY"] = '79537d00f4834892986f09a100aa1edf'
