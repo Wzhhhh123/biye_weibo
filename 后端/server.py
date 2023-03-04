@@ -22,17 +22,7 @@ from py.forp import forpa,get_single_page1,parse_page1,parse_page_twice,parse_pa
 from functools import wraps
 import random
 
-# 按日期分热度
-# select
-#
-# 	date_format(publish_time, '%Y-%m-%d') AS days,
-#     COUNT(1) AS total
-# from
-# 	weiboevents
-# WHERE title="张新成 受伤"
-# group by
-# 	days
-# order by days desc
+
 
 
 
@@ -544,12 +534,34 @@ def daoru2():
         db.insert(sql)
     return jsonify({"name": wid, "value": kk})
 
+
+
 @app.route("/echart")
 def echart():
     title = request.args.get('title')
-    return render_template('daping/index.html',title=title)
+    db = MysqlUtil()
+    sql = f'select status_province,count(status_province) as t from weiboevents WHERE title="{title}" group by status_province'
+    articles = db.fetchall(sql)  # 获取多条记录
+    db = MysqlUtil()
+    sql_2=f'select date_format(publish_time, "%Y-%m-%d %H:%i") AS days,COUNT(1) AS total from weiboevents WHERE title="{title}" group by days ORDER BY `days`  ASC'
+    hotchange = db.fetchall(sql_2)
+
+
+    return render_template('daping/index.html',title=title,articles=articles[1:],hotchange=hotchange)
+
 
 
 if __name__ == "__main__":
     app.run(debug = True,host='0.0.0.0',port=5555)
 
+# 按日期分热度
+# select
+#
+# 	date_format(publish_time, '%Y-%m-%d') AS days,
+#     COUNT(1) AS total
+# from
+# 	weiboevents
+# WHERE title="张新成 受伤"
+# group by
+# 	days
+# order by days desc
