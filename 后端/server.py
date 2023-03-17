@@ -288,7 +288,23 @@ def paqu():
 
 
 
-
+def line_base1() -> Line:
+    line = (
+        Line()
+        .add_xaxis(["0.7,1.4,2,3,4"])
+        .add_yaxis(
+            series_name="上传数据动态图",
+            y_axis=["0"],
+            is_smooth=True,
+            label_opts=opts.LabelOpts(is_show=False),
+        )
+        .set_global_opts(
+            title_opts=opts.TitleOpts(title="动态数据"),
+            xaxis_opts=opts.AxisOpts(type_="value"),
+            yaxis_opts=opts.AxisOpts(type_="value"),
+        )
+    )
+    return line
 def line_base() -> Line:
     line = (
         Line()
@@ -317,7 +333,15 @@ def get_line_chart():
     global kkk
     kkk = 0
     return c.dump_options_with_quotes()
+@app.route("/lineChart1")
+def get_line_chart1():
+    c = line_base1()
+    global idxx
+    idxx = -0.6
 
+    global kk
+    kk = 0
+    return c.dump_options_with_quotes()
 
 
 
@@ -549,10 +573,126 @@ def echart():
 
     return render_template('daping/index.html',title=title,articles=articles[1:],hotchange=hotchange)
 
+@app.route("/uploud_file")
+def upload253523():
+     return render_template('elel/upup.html')
 
+
+
+
+
+
+
+
+
+@app.route('/checkChunk', methods=['POST'])
+def checkChunk():
+    return jsonify({'ifExist':False})
+
+
+@app.route('/mergeChunks', methods=['POST'])
+def mergeChunks():
+    fileName=request.form.get('fileName')
+
+    md5=request.form.get('fileMd5')
+    chunk = 0  # 分片序号
+    with open(u'./upload/{}'.format(fileName), 'wb') as target_file:  # 创建新文件
+        while True:
+            try:
+                filename = './upload/{}-{}'.format(md5, chunk)
+                source_file = open(filename, 'rb')  # 按序打开每个分片
+                target_file.write(source_file.read())  # 读取分片内容写入新文件
+                source_file.close()
+            except:
+                break
+            chunk += 1
+            os.remove(filename)  # 删除该分片，节约空间
+    return jsonify({'upload':True})
+
+
+@app.route('/upload', methods=['POST'])
+def upload():  # 接收前端上传的一个分片
+    md5=request.form.get('fileMd5')
+    chunk_id=request.form.get('chunk',0,type=int)
+    filename = '{}-{}'.format(md5,chunk_id)
+    upload_file = request.files['file']
+    upload_file.save('./upload/{}'.format(filename))
+
+    return jsonify({'upload_part':True})
+
+
+
+@app.route('/file/list', methods=['GET'])
+def file_list():
+    files = os.listdir('./upload/')  # 获取文件目录
+    files = map(lambda x: x if isinstance(x, unicode) else x.decode('utf-8'), files)  # 注意编码
+    return render_template('./list.html', files=files)
+
+
+@app.route('/file/download/<filename>', methods=['GET'])
+def file_download(filename):
+
+    def send_chunk():  # 流式读取
+        store_path = './upload/%s' % filename
+
+        with open(store_path, 'rb') as target_file:
+            while True:
+                chunk = target_file.read(200000000 * 1024 * 1024)
+                if not chunk:
+                    break
+                yield chunk
+
+    return Response(send_chunk(), content_type='application/octet-stream')
+
+@app.route('/upupup', methods=['GET'])
+def upupup():
+    return render_template('/upup/index.html')
+
+
+
+
+
+@app.route('/daorubig', methods=['POST', 'GET'])
+def daorubig():
+    name = request.args.get('name')
+    with open(name+'.csv', 'r',encoding='gb18030', errors='ignore') as read_obj:
+            csv_reader = csv.reader(read_obj)
+            list_of_csv = list(csv_reader)
+        if (len(list_of_csv[0])==10):
+            for kk in range(len(list_of_csv)-1):
+                global kk
+                kk = kk + 1
+                print(kk)
+                sql = "INSERT INTO `bigevent_withoutsim` ( `标题／微博内容`, `信息属性`, `原创/转发`, `地址`, `媒体名称`, `发布日期`, `媒体类型`, `地域`, `全文内容`, `精准地域`,`title`)  \
+                                   VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')"\
+                                % (list_of_csv[kk][0],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4],\
+                                   list_of_csv[kk][5],list_of_csv[kk][6],list_of_csv[kk][7],list_of_csv[kk][8],list_of_csv[kk][9],title)
+
+                db = MysqlUtil()
+                db.insert(sql)
+
+        if (len(list_of_csv[0])>10):
+            for kk in range(len(list_of_csv)-1):
+                kk = kk + 1
+                global kk
+                sql = "INSERT INTO `bigevent` ( `标题／微博内容`, `信息属性`, `原创/转发`, `发布日期`, `原微博内容`, `认证类型`, `地域`, `城市`, `性别`, `全文内容`, `粉丝数`, `微博数`, `转`, `评`, `赞`, `话题`, `微博情绪`, `精准地域`, `中图地址`, `title`)  \
+                                   VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s')"\
+                                % (list_of_csv[kk][0],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4],list_of_csv[kk][5],list_of_csv[kk][6],\
+                                   list_of_csv[kk][7],list_of_csv[kk][8],list_of_csv[kk][9],list_of_csv[kk][10],list_of_csv[kk][11],list_of_csv[kk][12],list_of_csv[kk][13],list_of_csv[kk][14],list_of_csv[kk][15],list_of_csv[kk][16],list_of_csv[kk][17],list_of_csv[kk][18],title)
+
+                db = MysqlUtil()
+                db.insert(sql)
+    return jsonify(name)
+
+@app.route("/lineDynamicData1")
+def update_line_data1():
+    global kk
+    global idx
+    idx = idx + 0.7
+    return jsonify({"name": round(idx, 1), "value": count, "suan": round(count/idx,1)})
 
 if __name__ == "__main__":
-    app.run(debug = True,host='0.0.0.0',port=5555)
+    app.run(debug = True,host='0.0.0.0',port=5555, threaded=True)
 
 # 按日期分热度
 # select

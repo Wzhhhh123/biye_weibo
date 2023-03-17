@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="/templates/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/templates/js/echarts.min.js"></script>
+  <title>上传数据集</title>
+
+  <!-- Custom fonts for this template-->
+  <link rel="shortcut icon" href="/templates/elel/assets/images/favicon.css">
+  <link href="/templates/SK2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/templates/SK2/css/sb-admin-2.min.css" rel="stylesheet">
+
+  <link href="/templates/elel/assets/css/icons.min.css" rel="stylesheet" type="text/css">
+  <link href="/templates/elel/assets/css/app.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+
+    {% include '/SK2/shu.html' %}
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        {% include '/SK2/heng.html' %}
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">上传数据集</h1>
+          <p class="mb-4"> 上传</p>
+
+          <!-- Content Row -->
+          <div class="row">
+            <div class="col-12">
+              <div class="page-title-box">
+                <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">
+                      <a href="javascript: void(0);">数据上传分区</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="javascript: void(0);">数据来源</a>
+                    </li>
+                    <li class="breadcrumb-item active">上传已有Csv文件</li>
+                  </ol>
+                </div><button class="btn btn-light" type="button">
+                <i class="fas fa-upload fa-sm">上传已选择的Csv文件</i>
+              </button>
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="header-title m-t-0">拖入Csv或选择文件</h4>
+                  <p class="text-muted font-13 m-b-30">
+                    请上传符合字段要求的数据集
+                    ['标题／微博内容',
+                    '信息属性',
+                    '原创/转发',
+                    '地址',
+                    '媒体名称',
+                    '发布日期',
+                    '媒体类型',
+                    '地域',
+                    '全文内容',
+                    '精准地域']
+                  </p>
+                  <form action="/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews" data-upload-preview-template="#uploadPreviewTemplate">
+                    <div class="fallback">
+                      <input name="file" type="file" multiple="">
+                    </div>
+                    <div class="dz-message needsclick">
+                      <i class="h1 text-muted dripicons-cloud-upload"></i>
+                      <h3>拖入Csv或选择文件</h3>
+                      <span class="text-muted font-13">数据较大时请耐心等待
+<strong>下方</strong>生成可视化速率图</span>
+                    </div>
+                  </form>
+
+                  <div class="dropzone-previews mt-3" id="file-previews"></div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+          <div class="row">
+            <iframe style="width: 3000px;height: 200px" src="/upupup"></iframe>
+          </div>
+          <div class="row">
+            <div class="col-xl-8 col-lg-7" style="max-width: none;flex: none;width: 800px">
+              <!-- Area Chart -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">上传进度</h6>
+                </div>
+                <div class="card-body">
+                  <div class="my-tab" >
+                    <h1>上传时间 :</h1>
+                    <a id="pa_time_a" style="color: #1cc88a">0秒</a>
+                  </div>
+                  <div class="my-tab" style="margin-top: 150px">
+                    <h1>上传条数 :</h1>
+                    <a id="pa_tiao_a" style="color: #f6c23e">0条</a>
+                  </div>
+                  <div class="my-tab" style="margin-top: 270px;">
+                    <h1>上传速度 :</h1>
+                    <a id="pa_speed_a" style="color: #e74a3b">0条/秒</a>
+                  </div>
+                  <div class="chart-area">
+                    <div id="bar1" style="width:450px; height:300px;"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Bar Chart -->
+            </div>
+            <!-- Donut Chart -->
+
+
+            </div>
+
+          </div>
+            <!-- Donut Chart -->
+
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" src="/login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-none" id="uploadPreviewTemplate">
+    <div class="card mt-1 mb-0 shadow-none border">
+      <div class="p-2">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <img data-dz-thumbnail="" class="avatar-sm rounded bg-light" alt="">
+          </div>
+          <div class="col pl-0">
+            <a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name=""></a>
+            <p class="mb-0" data-dz-size="">
+          </div>
+          <div class="col-auto">
+
+            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove="">
+              <i class="dripicons-cross"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  <script src="/templates/SK2/vendor/jquery/jquery.min.js"></script>
+  <script src="/templates/SK2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/templates/SK2/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/templates/SK2/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/templates/SK2/vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+
+  <script src="/templates/elel/assets/js/app.min.js"></script>
+  <script src="/templates/SK2/vendor/chart.js/Chart.min.js"></script>
+  <script src="/templates/elel/assets/js/vendor/dropzone.min.js"></script>
+<script>
+  var chart = echarts.init(document.getElementById('bar1'), 'white', {renderer: 'canvas'});
+  var old_data = [];
+  fetchData(chart);
+  function fetchData() {
+    $.ajax({
+      type: "GET",
+      url: "/lineChart1",
+      dataType: "json",
+      success: function (result) {
+        chart.setOption(result);
+        old_data = chart.getOption().series[0].data;
+      }
+    });
+  }
+</script>
+  <script src="/templates/elel/assets/js/ui/component.fileupload.js"></script>
+
+</body>
+
+</html>
