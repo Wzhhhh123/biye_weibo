@@ -396,6 +396,7 @@
               '<td class="percentage"></td>'+
               '<td class="operate"><button name="upload" class="btn btn-warning">开始</button><button name="delete" class="btn btn-danger">删除</button><button  id="'+ file.name +'" class="btn btn-success" name="asd" onclick="daoruru(this)">导入数据库</button></td></tr>');
       map.put(file.id+"",file);
+
     });
 
     // 文件上传过程中创建进度条实时显示。
@@ -468,13 +469,16 @@
   </script>
 <script>
   function daoruru(e){
+    kaishipa()
     var aa =e.id
     $.ajax({
       type: "GET",
       url: "/daorubig?name="+aa,
       dataType: "json",
       success: function (result) {
-        alert(result)
+
+        alert('成功导入'+result.name+'条数为'+result.kk+'条')
+        clearInterval(myVar);
 
 
       }
@@ -482,6 +486,61 @@
 
 
   }
+
+
+
+
+
+
+
+
+
+  var chart = echarts.init(document.getElementById('bar1'), 'white', {renderer: 'canvas'});
+  var old_data = [];
+  fetchData(chart);
+  function kaishipa() {
+
+
+    myVar = setInterval(getDynamicData, 700);
+
+  }
+
+
+  function fetchData() {
+    $.ajax({
+      type: "GET",
+      url: "/lineChart1",
+      dataType: "json",
+      success: function (result) {
+        chart.setOption(result);
+        old_data = chart.getOption().series[0].data;
+      }
+    });
+  }
+
+  function getDynamicData() {
+
+    $.ajax({
+      type: "GET",
+      url: "/lineDynamicData1",
+      dataType: "json",
+      success: function (result) {
+
+        old_data.push([result.name, result.value]);
+        document.getElementById("pa_time_a").innerHTML = result.name + "秒"
+        document.getElementById("pa_tiao_a").innerHTML = result.value + "条"
+        document.getElementById("pa_speed_a").innerHTML = result.suan + "条/秒"
+        chart.setOption({
+          series: [{data: old_data}]
+        });
+
+      }
+    });
+  }
+
+
+
+
 </script>
 </body>
 

@@ -170,9 +170,17 @@ def indqwex():
     db = MysqlUtil()
     count_number = db.fetchall(sql_2)
     sql_6=f'SELECT count(`id`) as t FROM `weiboevents`'
+    sql_16=f'SELECT count(`id`) as t FROM `bigevent`'
+    sql_17=f'SELECT count(`id`) as t FROM `bigevent_withoutsim`'
+    db = MysqlUtil()
+    count_eventsnumber_1 = db.fetchall(sql_16)
+    db = MysqlUtil()
+    count_eventsnumber_2 = db.fetchall(sql_17)
+
     sql_7=f'SELECT count(`id`) as t FROM `weibohotpot`;'
     db = MysqlUtil()
     count_eventsnumber = db.fetchall(sql_6)
+    ttt=count_eventsnumber_1[0]['t']+count_eventsnumber_2[0]['t']+count_eventsnumber[0]['t']
     db = MysqlUtil()
     count_hotnumber = db.fetchall(sql_7)
     sql_8=f'SELECT count(`id`) as t FROM `weiboevents` WHERE gender="f"'
@@ -186,7 +194,7 @@ def indqwex():
     db = MysqlUtil()
     zhanbiCHI=round((db.fetchall(sql_10)[0]['t']/zhan_1)*100,1)
 
-    return render_template('SK2/index.html', articles=articles, page=int(page), numbers=count_number, count_eventsnumber=count_eventsnumber ,count_hotnumber=count_hotnumber,f=count_famale,m=count_male,chi=zhanbiCHI)  # 渲染模板
+    return render_template('SK2/index.html', articles=articles, page=int(page), numbers=count_number, ttt=ttt ,count_hotnumber=count_hotnumber,f=count_famale,m=count_male,chi=zhanbiCHI)  # 渲染模板
 
 @app.route('/table/events')
 def tableEvent():
@@ -654,42 +662,45 @@ def upupup():
 
 @app.route('/daorubig', methods=['POST', 'GET'])
 def daorubig():
+    global kk
     name = request.args.get('name')
-    with open(name+'.csv', 'r',encoding='gb18030', errors='ignore') as read_obj:
+    try:
+        with open('upload/'+name, 'r',encoding='gb18030', errors='ignore') as read_obj:
             csv_reader = csv.reader(read_obj)
             list_of_csv = list(csv_reader)
-        if (len(list_of_csv[0])==10):
-            for kk in range(len(list_of_csv)-1):
-                global kk
-                kk = kk + 1
-                print(kk)
-                sql = "INSERT INTO `bigevent_withoutsim` ( `标题／微博内容`, `信息属性`, `原创/转发`, `地址`, `媒体名称`, `发布日期`, `媒体类型`, `地域`, `全文内容`, `精准地域`,`title`)  \
-                                   VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')"\
-                                % (list_of_csv[kk][0],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4],\
-                                   list_of_csv[kk][5],list_of_csv[kk][6],list_of_csv[kk][7],list_of_csv[kk][8],list_of_csv[kk][9],title)
+    except:
+        return jsonify("上传失败")
+    if (len(list_of_csv[0])==10):
+        for kk in range(len(list_of_csv)-1):
+            kk = kk + 1
 
-                db = MysqlUtil()
-                db.insert(sql)
+            sql = "INSERT INTO `bigevent_withoutsim` ( `标题／微博内容`, `信息属性`, `原创/转发`, `地址`, `媒体名称`, `发布日期`, `媒体类型`, `地域`, `全文内容`, `精准地域`,`title`)  \
+                               VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')"\
+                            % (list_of_csv[kk][0],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4],\
+                               list_of_csv[kk][5],list_of_csv[kk][6],list_of_csv[kk][7],list_of_csv[kk][8],list_of_csv[kk][9],name)
 
-        if (len(list_of_csv[0])>10):
-            for kk in range(len(list_of_csv)-1):
-                kk = kk + 1
-                global kk
-                sql = "INSERT INTO `bigevent` ( `标题／微博内容`, `信息属性`, `原创/转发`, `发布日期`, `原微博内容`, `认证类型`, `地域`, `城市`, `性别`, `全文内容`, `粉丝数`, `微博数`, `转`, `评`, `赞`, `话题`, `微博情绪`, `精准地域`, `中图地址`, `title`)  \
-                                   VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s')"\
-                                % (list_of_csv[kk][0],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4],list_of_csv[kk][5],list_of_csv[kk][6],\
-                                   list_of_csv[kk][7],list_of_csv[kk][8],list_of_csv[kk][9],list_of_csv[kk][10],list_of_csv[kk][11],list_of_csv[kk][12],list_of_csv[kk][13],list_of_csv[kk][14],list_of_csv[kk][15],list_of_csv[kk][16],list_of_csv[kk][17],list_of_csv[kk][18],title)
+            db = MysqlUtil()
+            db.insert(sql)
+    if (len(list_of_csv[0])>10):
+        for kk in range(len(list_of_csv)-1):
+            kk = kk + 1
 
-                db = MysqlUtil()
-                db.insert(sql)
-    return jsonify(name)
+            sql = "INSERT INTO `bigevent` ( `标题／微博内容`, `信息属性`, `原创/转发`, `发布日期`, `原微博内容`, `认证类型`, `地域`, `城市`, `性别`, `全文内容`, `粉丝数`, \
+            `微博数`, `转`, `评`, `赞`, `话题`, `微博情绪`, `精准地域`, `中图地址`, `title`)  \
+                               VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s')"\
+                            % (list_of_csv[kk][0],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4],list_of_csv[kk][5],list_of_csv[kk][6],\
+                               list_of_csv[kk][7],list_of_csv[kk][8],list_of_csv[kk][9],list_of_csv[kk][10],list_of_csv[kk][11],list_of_csv[kk][12],list_of_csv[kk][13],list_of_csv[kk][14],list_of_csv[kk][15],list_of_csv[kk][16],list_of_csv[kk][17],list_of_csv[kk][18],name)
+
+            db = MysqlUtil()
+            db.insert(sql)
+    return jsonify({"name": name, "value": kk})
 
 @app.route("/lineDynamicData1")
 def update_line_data1():
     global kk
-    global idx
-    idx = idx + 0.7
-    return jsonify({"name": round(idx, 1), "value": count, "suan": round(count/idx,1)})
+    global idxx
+    idxx = idxx + 0.7
+    return jsonify({"name": round(idxx, 1), "value": kk, "suan": round(kk/idxx,1)})
 
 if __name__ == "__main__":
     app.run(debug = True,host='0.0.0.0',port=5555, threaded=True)
