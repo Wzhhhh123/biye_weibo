@@ -1,0 +1,851 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>index</title>
+<script type="text/javascript" src="/templates/daping/js/jquery.js"></script>
+<link rel="stylesheet" href="/templates/daping/css/comon0.css">
+</head>
+	<script>
+	$(window).load(function(){  
+             $(".loading").fadeOut()
+            })  
+			
+/****/
+$(document).ready(function(){
+	var whei=$(window).width()
+	$("html").css({fontSize:whei/20})
+	$(window).resize(function(){
+		var whei=$(window).width()
+	 $("html").css({fontSize:whei/20})
+});
+	});
+	</script>
+	<script type="text/javascript" src="/templates/daping/js/echarts.min.js"></script>
+	<script language="JavaScript">
+
+      $(function () {
+        echarts_1();
+        echarts_2();
+        echarts_4();
+        echarts_31();
+        echarts_32();
+        echarts_33();
+        echarts_5();
+        echarts_6();
+        function echarts_1() {
+          // 基于准备好的dom，初始化echarts实例
+
+
+          // 使用刚指定的配置项和数据显示图表。
+
+          window.addEventListener("resize",function(){
+            myChart.resize();
+          });
+        }
+        function echarts_2() {
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('echart2'));
+
+          option = {
+            //  backgroundColor: '#00265f',
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: { type: 'shadow'}
+            },
+            grid: {
+              left: '0%',
+              top:'10px',
+              right: '0%',
+              bottom: '4%',
+              containLabel: true
+            },
+            xAxis: [{
+              type: 'category',
+              data: ['浙江', '上海', '江苏', '广东', '北京', '深圳', '安徽'],
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: "rgba(255,255,255,.1)",
+                  width: 1,
+                  type: "solid"
+                },
+              },
+
+              axisTick: {
+                show: false,
+              },
+              axisLabel:  {
+                interval: 0,
+                // rotate:50,
+                show: true,
+                splitNumber: 15,
+                textStyle: {
+                  color: "rgba(255,255,255,.6)",
+                  fontSize: '12',
+                },
+              },
+            }],
+            yAxis: [{
+              type: 'value',
+              axisLabel: {
+                //formatter: '{value} %'
+                show:true,
+                textStyle: {
+                  color: "rgba(255,255,255,.6)",
+                  fontSize: '12',
+                },
+              },
+              axisTick: {
+                show: false,
+              },
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: "rgba(255,255,255,.1	)",
+                  width: 1,
+                  type: "solid"
+                },
+              },
+              splitLine: {
+                lineStyle: {
+                  color: "rgba(255,255,255,.1)",
+                }
+              }
+            }],
+            series: [
+              {
+
+                type: 'bar',
+                data: [1500, 1200, 600, 200, 300, 300, 900],
+                barWidth:'35%', //柱子宽度
+                // barGap: 1, //柱子之间间距
+                itemStyle: {
+                  normal: {
+                    color:'#27d08a',
+                    opacity: 1,
+                    barBorderRadius: 5,
+                  }
+                }
+              }
+
+            ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          window.addEventListener("resize",function(){
+            myChart.resize();
+          });
+        }
+        function echarts_5() {
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('echart5'));
+
+          option = {
+            //  backgroundColor: '#00265f',
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow'
+              }
+            },
+
+            grid: {
+              left: '0%',
+              top:'10px',
+              right: '0%',
+              bottom: '2%',
+              containLabel: true
+            },
+            xAxis: [{
+              type: 'category',
+              data: ['浙江', '上海', '江苏', '广东', '北京', '深圳', '安徽', '四川'],
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: "rgba(255,255,255,.1)",
+                  width: 1,
+                  type: "solid"
+                },
+              },
+
+              axisTick: {
+                show: false,
+              },
+              axisLabel:  {
+                interval: 0,
+                // rotate:50,
+                show: true,
+                splitNumber: 15,
+                textStyle: {
+                  color: "rgba(255,255,255,.6)",
+                  fontSize: '12',
+                },
+              },
+            }],
+            yAxis: [{
+              type: 'value',
+              axisLabel: {
+                //formatter: '{value} %'
+                show:true,
+                textStyle: {
+                  color: "rgba(255,255,255,.6)",
+                  fontSize: '12',
+                },
+              },
+              axisTick: {
+                show: false,
+              },
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: "rgba(255,255,255,.1	)",
+                  width: 1,
+                  type: "solid"
+                },
+              },
+              splitLine: {
+                lineStyle: {
+                  color: "rgba(255,255,255,.1)",
+                }
+              }
+            }],
+            series: [{
+              type: 'bar',
+              data: [2, 3, 3, 9, 15, 12, 6, 4, 6, 7, 4, 10],
+              barWidth:'35%', //柱子宽度
+              // barGap: 1, //柱子之间间距
+              itemStyle: {
+                normal: {
+                  color:'#2f89cf',
+                  opacity: 1,
+                  barBorderRadius: 5,
+                }
+              }
+            }
+            ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          window.addEventListener("resize",function(){
+            myChart.resize();
+          });
+        }
+
+        function echarts_4() {
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('echart4'));
+
+          option = {
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                lineStyle: {
+                  color: '#dddc6b'
+                }
+              }
+            },
+            legend: {
+              top:'0%',
+              data:['舆情事件大概曲线','本事件发展曲线'],
+              textStyle: {
+                color: 'rgba(255,255,255,.5)',
+                fontSize:'12',
+              }
+            },
+            grid: {
+              left: '10',
+              top: '30',
+              right: '10',
+              bottom: '10',
+              containLabel: true
+            },
+
+            xAxis: [{
+              type: 'category',
+              boundaryGap: false,
+              axisLabel:  {
+                textStyle: {
+                  color: "rgba(255,255,255,.6)",
+                  fontSize:12,
+                },
+              },
+              axisLine: {
+                lineStyle: {
+                  color: 'rgba(255,255,255,.2)'
+                }
+
+              },
+
+              data: [{% for a in hotchange %}'{{a.days}}',{% endfor %}]
+
+            }, {
+
+              axisPointer: {show: false},
+              axisLine: {  show: false},
+              position: 'bottom',
+              offset: 20,
+
+
+
+            }],
+
+            yAxis: [{
+              type: 'value',
+              axisTick: {show: false},
+              axisLine: {
+                lineStyle: {
+                  color: 'rgba(255,255,255,.1)'
+                }
+              },
+              axisLabel:  {
+                textStyle: {
+                  color: "rgba(255,255,255,.6)",
+                  fontSize:12,
+                },
+              },
+
+              splitLine: {
+                lineStyle: {
+                  color: 'rgba(255,255,255,.1)'
+                }
+              }
+            }],
+            series: [
+              {
+                name: '本事件发展曲线',
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 5,
+                showSymbol: false,
+                lineStyle: {
+
+                  normal: {
+                    color: '#0184d5',
+                    width: 2
+                  }
+                },
+                areaStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                      offset: 0,
+                      color: 'rgba(1, 132, 213, 0.4)'
+                    }, {
+                      offset: 0.8,
+                      color: 'rgba(1, 132, 213, 0.1)'
+                    }], false),
+                    shadowColor: 'rgba(0, 0, 0, 0.1)',
+                  }
+                },
+                itemStyle: {
+                  normal: {
+                    color: '#0184d5',
+                    borderColor: 'rgba(221, 220, 107, .1)',
+                    borderWidth: 12
+                  }
+                },
+                data: [{% for a in hotchange %}'{{a.total}}',{% endfor %}]
+
+              },
+              {
+                name: '舆情事件大概曲线',
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 5,
+                showSymbol: false,
+                lineStyle: {
+
+                  normal: {
+                    color: '#00d887',
+                    width: 2
+                  }
+                },
+                areaStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                      offset: 0,
+                      color: 'rgba(0, 216, 135, 0.4)'
+                    }, {
+                      offset: 0.8,
+                      color: 'rgba(0, 216, 135, 0.1)'
+                    }], false),
+                    shadowColor: 'rgba(0, 0, 0, 0.1)',
+                  }
+                },
+                itemStyle: {
+                  normal: {
+                    color: '#00d887',
+                    borderColor: 'rgba(221, 220, 107, .1)',
+                    borderWidth: 12
+                  }
+                },
+                data: []
+
+              },
+
+            ]
+
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          window.addEventListener("resize",function(){
+            myChart.resize();
+          });
+        }
+        function echarts_6() {
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('echart6'));
+
+          var dataStyle = {
+            normal: {
+              label: {
+                show: false
+              },
+              labelLine: {
+                show: false
+              },
+              //shadowBlur: 40,
+              //shadowColor: 'rgba(40, 40, 40, 1)',
+            }
+          };
+          var placeHolderStyle = {
+            normal: {
+              color: 'rgba(255,255,255,.05)',
+              label: {show: false,},
+              labelLine: {show: false}
+            },
+            emphasis: {
+              color: 'rgba(0,0,0,0)'
+            }
+          };
+          option = {
+            color: ['#0f63d6', '#0f78d6', '#0f8cd6', '#0fa0d6', '#0fb4d6'],
+            tooltip: {
+              show: true,
+              formatter: "{a} : {c} "
+            },
+            legend: {
+              itemWidth: 10,
+              itemHeight: 10,
+              itemGap: 12,
+              bottom: '3%',
+
+              data: ['浙江', '上海', '广东', '北京', '深圳'],
+              textStyle: {
+                color: 'rgba(255,255,255,.6)',
+              }
+            },
+
+            series: [
+              {
+                name: '浙江',
+                type: 'pie',
+                clockWise: false,
+                center: ['50%', '42%'],
+                radius: ['59%', '70%'],
+                itemStyle: dataStyle,
+                hoverAnimation: false,
+                data: [{
+                  value: 80,
+                  name: '01'
+                }, {
+                  value: 20,
+                  name: 'invisible',
+                  tooltip: {show: false},
+                  itemStyle: placeHolderStyle
+                }]
+              },
+              {
+                name: '上海',
+                type: 'pie',
+                clockWise: false,
+                center: ['50%', '42%'],
+                radius: ['49%', '60%'],
+                itemStyle: dataStyle,
+                hoverAnimation: false,
+                data: [{
+                  value: 70,
+                  name: '02'
+                }, {
+                  value: 30,
+                  name: 'invisible',
+                  tooltip: {show: false},
+                  itemStyle: placeHolderStyle
+                }]
+              },
+              {
+                name: '广东',
+                type: 'pie',
+                clockWise: false,
+                hoverAnimation: false,
+                center: ['50%', '42%'],
+                radius: ['39%', '50%'],
+                itemStyle: dataStyle,
+                data: [{
+                  value: 65,
+                  name: '03'
+                }, {
+                  value: 35,
+                  name: 'invisible',
+                  tooltip: {show: false},
+                  itemStyle: placeHolderStyle
+                }]
+              },
+              {
+                name: '北京',
+                type: 'pie',
+                clockWise: false,
+                hoverAnimation: false,
+                center: ['50%', '42%'],
+                radius: ['29%', '40%'],
+                itemStyle: dataStyle,
+                data: [{
+                  value: 60,
+                  name: '04'
+                }, {
+                  value: 40,
+                  name: 'invisible',
+                  tooltip: {show: false},
+                  itemStyle: placeHolderStyle
+                }]
+              },
+              {
+                name: '深圳',
+                type: 'pie',
+                clockWise: false,
+                hoverAnimation: false,
+                center: ['50%', '42%'],
+                radius: ['20%', '30%'],
+                itemStyle: dataStyle,
+                data: [{
+                  value: 50,
+                  name: '05'
+                }, {
+                  value: 50,
+                  name: 'invisible',
+                  tooltip: {show: false},
+                  itemStyle: placeHolderStyle
+                }]
+              }, ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          window.addEventListener("resize",function(){
+            myChart.resize();
+          });
+        }
+        function echarts_31() {
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('fb1'));
+          option = {
+
+            title: [{
+              text: '年龄分布',
+              left: 'center',
+              textStyle: {
+                color: '#fff',
+                fontSize:'16'
+              }
+
+            }],
+            tooltip: {
+              trigger: 'item',
+              formatter: "{a} <br/>{b}: {c} ({d}%)",
+              position:function(p){   //其中p为当前鼠标的位置
+                return [p[0] + 10, p[1] - 10];
+              }
+            },
+            legend: {
+
+              top:'70%',
+              itemWidth: 10,
+              itemHeight: 10,
+              data:['0岁以下','20-29岁','30-39岁','40-49岁','50岁以上'],
+              textStyle: {
+                color: 'rgba(255,255,255,.5)',
+                fontSize:'12',
+              }
+            },
+            series: [
+              {
+                name:'年龄分布',
+                type:'pie',
+                center: ['50%', '42%'],
+                radius: ['40%', '60%'],
+                color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
+                label: {show:false},
+                labelLine: {show:false},
+                data:[
+                  {value:1, name:'0岁以下'},
+                  {value:4, name:'20-29岁'},
+                  {value:2, name:'30-39岁'},
+                  {value:2, name:'40-49岁'},
+                  {value:1, name:'50岁以上'},
+                ]
+              }
+            ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          window.addEventListener("resize",function(){
+            myChart.resize();
+          });
+        }
+        function echarts_32() {
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('fb2'));
+          option1 = {
+
+            title: [{
+              text: '情感分布',
+              left: 'center',
+              textStyle: {
+                color: '#fff',
+                fontSize:'16'
+              }
+
+            }],
+            tooltip: {
+              trigger: 'item',
+              formatter: "{a} <br/>{b}: {c} ({d}%)",
+              position:function(p){   //其中p为当前鼠标的位置
+                return [p[0] + 10, p[1] - 10];
+              }
+            },
+            legend: {
+
+              top:'70%',
+              itemWidth: 10,
+              itemHeight: 10,
+
+          // {% for qgfb in qgfb %}'{{qgfb.微博情绪}}',{% endfor %}
+              data:[{% for qgfb in qgfb %}'{{qgfb.微博情绪}}',{% endfor %}],
+              textStyle: {
+                color: 'rgba(255,255,255,.5)',
+                fontSize:'12',
+              }
+            },
+            series: [
+              {
+                name:'情感分布',
+                type:'pie',
+                center: ['50%', '42%'],
+                radius: ['40%', '60%'],
+                color: ['#45C2E0', '#C1EBDD', '#FFC851','#5A5476','#1869A0','#FF9393'],
+                label: {show:false},
+                labelLine: {show:false},
+                data:[
+                  {% for qgfb in qgfb %}{value:{{qgfb.t}}, name:'{{qgfb.微博情绪}}'},{% endfor %}
+
+                ]
+              }
+            ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option1);
+          window.addEventListener("resize",function(){
+            myChart.resize();
+          });
+        }
+        function echarts_33() {
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('fb3'));
+          option2 = {
+            title: [{
+              text: '{{chengshi}}情感分布',
+              left: 'center',
+              textStyle: {
+                color: '#fff',
+                fontSize:'16'
+              }
+
+            }],
+            tooltip: {
+              trigger: 'item',
+              formatter: "{a} <br/>{b}: {c} ({d}%)",
+              position:function(p){   //其中p为当前鼠标的位置
+                return [p[0] + 10, p[1] - 10];
+              }
+            },
+            legend: {
+              top:'70%',
+              itemWidth: 10,
+              itemHeight: 10,
+              data:[{% for qgfb in qgfb %}'{{qgfb.微博情绪}}',{% endfor %}],
+              textStyle: {
+                color: 'rgba(255,255,255,.5)',
+                fontSize:'12',
+              }
+            },
+            series: [
+              {
+                name:'{{chengshi}}情感分布',
+                type:'pie',
+                center: ['50%', '42%'],
+                radius: ['40%', '60%'],
+                color: ['#45C2E0', '#C1EBDD', '#FFC851','#5A5476','#1869A0','#FF9393'],
+                label: {show:false},
+                labelLine: {show:false},
+                data:[
+                  {% for qgfb_cs in qgfb_cs %}{value:{{qgfb_cs.t}}, name:'{{qgfb_cs.微博情绪}}'},{% endfor %}
+
+        ]
+              }
+            ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option2);
+          window.addEventListener("resize",function(){
+            myChart.resize();
+          });
+        }
+
+
+      })
+
+
+
+    </script>
+<body>
+<div class="canvas" style="opacity: .2">
+	<iframe frameborder="0" src="/templates/daping/js/index.html" style="width: 100%; height: 100%"></iframe>
+	</div>
+<div class="loading">
+  <div class="loadbox"> <img src="/templates/daping/picture/loading.gif"> 页面加载中... </div>
+</div>
+<div class="head">
+  <h1>"" {{chengshi}} ""情感对比</h1>
+  <div class="weather"><!--<img src="picture/weather.png"><span>多云转小雨</span>--><span id="showTime"></span></div>
+	
+	<script>
+var t = null;
+    t = setTimeout(time,1000);//開始运行
+    function time()
+    {
+       clearTimeout(t);//清除定时器
+       dt = new Date();
+		var y=dt.getFullYear();
+		var mt=dt.getMonth()+1;
+		var day=dt.getDate();
+       var h=dt.getHours();//获取时
+       var m=dt.getMinutes();//获取分
+       var s=dt.getSeconds();//获取秒
+       document.getElementById("showTime").innerHTML = y+"年"+mt+"月"+day+"-"+h+"时"+m+"分"+s+"秒";
+       t = setTimeout(time,1000); //设定定时器，循环运行     
+    } 
+
+</script>
+	
+	
+</div>
+<div class="mainbox">
+  <ul class="clearfix">
+    <li>
+      <div class="boxall" style="height: 3.2rem">
+        <div class="alltitle">比较结果
+
+
+
+        <h1 style="color: #f8f9ff">{{chengshi}}比整体事件情感</h1>
+          <h1> .</h1>
+
+<h1 style="color: #f8f9ff;font-size: 60px">{{az}}</h1>
+          <h2> .</h2>
+          <h2 style="color: #f8f9ff">{{azz}}</h2>
+
+
+        </div>
+        <div class="allnav" id="echart1"></div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 3.2rem">
+        <div class="alltitle">地图画像</div>
+        <div class="allnav" id="echart2"></div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 3.2rem">
+        <div style="height:100%; width: 100%;">
+		  	<div class="sy" id="fb1"></div>
+				<div class="sy" id="fb2"></div>
+				<div class="sy" id="fb3"></div>
+		  </div>
+        <div class="boxfoot">
+			
+		  </div>
+      </div>
+    </li>
+    <li>
+      <div class="bar">
+        <div class="barbox">
+          <ul class="clearfix">
+            <li class="pulll_left counter">{{jijilv}}</li>
+            <li class="pulll_left counter">{{xiaojilv}}</li>
+          </ul>
+        </div>
+        <div class="barbox2">
+          <ul class="clearfix">
+            <li class="pulll_left">积极率 </li>
+            <li class="pulll_left">消极率</li>
+          </ul>
+        </div>
+      </div>
+      <div class="map">
+        <div class="map1"><img src="/templates/daping/picture/lbx.png"></div>
+        <div class="map2"><img src="/templates/daping/picture/jt.png"></div>
+        <div class="map3"><img src="/templates/daping/picture/map.png"></div>
+        <div class="map4" id="map_1"></div>
+      </div>
+    </li>
+    <li>
+          <div class="boxall t_btn5" style="height:3.4rem">
+        <div class="alltitle">舆情发展曲线拟合</div>
+        <div class="allnav" id="echart4"></div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 3.2rem">
+        <div class="alltitle">模块标题样式</div>
+        <div class="allnav" id="echart5"></div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 3rem">
+        <div class="alltitle">模块标题样式</div>
+        <div class="allnav" id="echart6"></div>
+        <div class="boxfoot"></div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="back"></div>
+
+
+<script type="text/javascript" src="/templates/daping/js/china.js"></script>
+<script type="text/javascript">
+  $('.t_btn5').click(function(){
+    window.location.href = "/DH?id=5";
+  });
+  $(function () {
+    map();
+    function map() {
+          // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('map_1'));
+      myChart.setOption(option2);
+      window.addEventListener("resize",function(){
+        myChart.resize();
+      });
+    }
+
+  })
+
+
+</script>
+</body>
+</html>

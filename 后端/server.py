@@ -207,6 +207,36 @@ def tableEvent():
     # 遍历文章数据
     return render_template('SK2/tables.html', articles=articles) # 渲染模板
 
+
+@app.route('/table/events_up')
+def tableEvent_UP():
+    sql_4="select (@id:=@id+1) as id,title,count(`id`) as t from bigevent,(SELECT @id:=0 )as id_temp group by title"
+    db = MysqlUtil()
+    articles = db.fetchall(sql_4)
+    for i in range(len(articles)):
+        articles[i]["id"]=int(articles[i]["id"])
+        sql_5="select (@id:=@id+1) as id,title,count(`id`) as t from bigevent_withoutsim,(SELECT @id:=0 )as id_temp group by title"
+    db = MysqlUtil()
+    es1 = db.fetchall(sql_5)
+    for i in range(len(es1)):
+        es1[i]["id"]=int(es1[i]["id"])
+    # 遍历文章数据
+    # 遍历文章数据
+    return render_template('SK2/tables_up.html', articles=articles,es1=es1) # 渲染模板
+@app.route('/table/detail_up')
+def tableEventdetail_UP():
+    title = request.args.get('title')
+    sql_4= f'SELECT * FROM bigevent  where title="{title}" LIMIT 100'
+    db = MysqlUtil()
+    articles = db.fetchall(sql_4)
+    return render_template('SK2/tablesdetail_up.html', articles=articles, title=title) # 渲染模板
+@app.route('/table/detail_up_withoutsim')
+def tableEventdetail_UP_wit():
+    title = request.args.get('title')
+    sql_4= f'SELECT * FROM bigevent_withoutsim  where title="{title}" LIMIT 100'
+    db = MysqlUtil()
+    articles = db.fetchall(sql_4)
+    return render_template('SK2/tablesdetail_up_wit.html', articles=articles, title=title) # 渲染模板
 @app.route('/table/detail')
 def tableEventdetail():
     title = request.args.get('title')
@@ -580,6 +610,89 @@ def echart():
 
 
     return render_template('daping/index.html',title=title,articles=articles[1:],hotchange=hotchange)
+
+@app.route("/echart_big")
+def echart_big():
+    title = request.args.get('title')
+    db = MysqlUtil()
+
+    sql = f'select `城市`,count(`城市`) as t from bigevent WHERE title="{title}" group by `城市`'
+
+
+    articles = db.fetchall(sql)  # 获取多条记录
+    db = MysqlUtil()
+    sql_2=f'select date_format(`发布日期`, "%Y-%m-%d %H:%i") AS days,COUNT(1) AS total from bigevent WHERE title="{title}" group by days ORDER BY `days`  ASC'
+    hotchange = db.fetchall(sql_2)
+    sql_q = f'select `微博情绪`,count(`微博情绪`) as t from bigevent WHERE title="{title}" group by `微博情绪`'
+    db = MysqlUtil()
+    qgfb = db.fetchall(sql_q)
+
+    return render_template('daping/index_big.html',title=title,articles=articles[1:],hotchange=hotchange,qgfb=qgfb)
+
+@app.route("/qinggan")
+def qinggan():
+    chengshi = request.args.get('chengshi')
+    title = request.args.get('title')
+    db = MysqlUtil()
+    sql_2=f'select date_format(`发布日期`, "%Y-%m-%d %H:%i") AS days,COUNT(1) AS total from bigevent WHERE title="{title}" group by days ORDER BY `days`  ASC'
+    hotchange = db.fetchall(sql_2)
+    sql_q = f'select `微博情绪`,count(`微博情绪`) as t from bigevent WHERE title="{title}" group by `微博情绪`'
+    db = MysqlUtil()
+    qgfb = db.fetchall(sql_q)
+
+    sql_cs=f'select `微博情绪`,count(`微博情绪`) as t from bigevent WHERE title="{title}" AND `城市`="{chengshi}" group by `微博情绪`'
+    db = MysqlUtil()
+    qgfb_cs = db.fetchall(sql_cs)
+    zong_1=0
+    jiji_1=0
+    xiaoji_1=0
+    zong_2=0
+    jiji_2=0
+    xiaoji_2=0
+    for i in qgfb:
+        zong_1+=i['t']
+        if i['微博情绪']=='喜悦':
+            jiji_1+=i['t']
+        if i['微博情绪']=='恐惧':
+            xiaoji_1+=i['t']
+        if i['微博情绪']=='悲伤':
+            xiaoji_1+=i['t']
+        if i['微博情绪']=='惊奇':
+            jiji_1+=i['t']
+        if i['微博情绪']=='愤怒':
+            xiaoji_1+=i['t']
+    for i in qgfb_cs:
+        zong_2+=i['t']
+        if i['微博情绪']=='喜悦':
+            jiji_2+=i['t']
+        if i['微博情绪']=='恐惧':
+            xiaoji_2+=i['t']
+        if i['微博情绪']=='悲伤':
+            xiaoji_2+=i['t']
+        if i['微博情绪']=='惊奇':
+            jiji_2+=i['t']
+        if i['微博情绪']=='愤怒':
+            xiaoji_2+=i['t']
+    if (jiji_2/zong_2 < jiji_1/zong_1):
+
+        az="偏悲观"
+        azz="急需监控是否可能发生舆情事件"
+    elif (xiaoji_2/zong_2 < xiaoji_1/zong_1):
+
+        az="偏乐观"
+        azz="不易发生舆情事件"
+    else:
+         az="既不乐观也不悲观"
+         azz="需要后续急需观察"
+    if (jiji_2 == xiaoji_2):
+
+        az="既不乐观也不悲观"
+        azz="需要后续急需观察"
+
+    xiaojilv=xiaoji_2/zong_2
+    jijilv=jiji_2/zong_2
+    print(xiaoji_1/zong_1,xiaoji_2/zong_2,jiji_1/zong_1,jiji_2/zong_2)
+    return render_template('daping/qinggan.html',xiaojilv=round(xiaojilv,5),jijilv=round(jijilv,5),title=title,hotchange=hotchange,qgfb=qgfb,qgfb_cs=qgfb_cs,chengshi=chengshi,az=az,azz=azz)
 
 @app.route("/uploud_file")
 def upload253523():
