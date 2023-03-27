@@ -7,3 +7,6 @@ flask_cors==3.0.10
 pyquery==2.0.0
 emoji
 demoji
+joblib
+jieba
+scikit-learn

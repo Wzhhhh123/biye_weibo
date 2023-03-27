@@ -97,6 +97,7 @@
                     <th>ID</th>
                     <th>标题</th>
                     <th>现有条数</th>
+                    <th>手动标注情绪</th>
                     <th>详细数据</th>
                     <th>相关可视化画像</th>
 
@@ -109,6 +110,7 @@
                     <td>{{article.id}}</td>
                     <td>{{article.title}}</td>
                     <td>{{article.t}}</td>
+                    <td><a class="fa fa-smile" href="/biaozhu?title={{article.title}}">点此手动标注情绪</a></td>
                     <td><a href="detail_up_withoutsim?title={{article.title}}">点此查看详细数据</a></td>
                     <td><a href="/echart_big?title={{article.title}}">点此查看画像</a></td>
                   </tr>

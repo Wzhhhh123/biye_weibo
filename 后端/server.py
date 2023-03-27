@@ -21,9 +21,7 @@ from py.graph import graph
 from py.forp import forpa,get_single_page1,parse_page1,parse_page_twice,parse_page_third
 from functools import wraps
 import random
-
-
-
+from py.moxing.ceshi import IsPoOrNeg
 
 
 app = Flask(__name__, static_folder="templates")
@@ -323,7 +321,23 @@ def paqu():
 
     return render_template('SK2/charts.html',event=event)
 
-
+def line_base2() -> Line:
+    line = (
+        Line()
+        .add_xaxis(["0.7,1.4,2,3,4"])
+        .add_yaxis(
+            series_name="上传数据动态图",
+            y_axis=["0"],
+            is_smooth=True,
+            label_opts=opts.LabelOpts(is_show=False),
+        )
+        .set_global_opts(
+            title_opts=opts.TitleOpts(title="动态数据"),
+            xaxis_opts=opts.AxisOpts(type_="value"),
+            yaxis_opts=opts.AxisOpts(type_="value"),
+        )
+    )
+    return line
 
 
 def line_base1() -> Line:
@@ -376,12 +390,24 @@ def get_line_chart1():
     c = line_base1()
     global idxx
     idxx = -0.6
-
     global kk
     kk = 0
     return c.dump_options_with_quotes()
 
-
+@app.route("/lineChart2")
+def get_line_chart2():
+    c = line_base2()
+    global idxxx1
+    idxxx1 = -0.6
+    global kkkkk
+    global aIDID
+    global acomment
+    global pdqinggan
+    kkkkk = 0
+    aIDID=''
+    acomment=''
+    pdqinggan=''
+    return c.dump_options_with_quotes()
 
 
 @app.route("/lineDynamicData")
@@ -615,10 +641,7 @@ def echart():
 def echart_big():
     title = request.args.get('title')
     db = MysqlUtil()
-
     sql = f'select `城市`,count(`城市`) as t from bigevent WHERE title="{title}" group by `城市`'
-
-
     articles = db.fetchall(sql)  # 获取多条记录
     db = MysqlUtil()
     sql_2=f'select date_format(`发布日期`, "%Y-%m-%d %H:%i") AS days,COUNT(1) AS total from bigevent WHERE title="{title}" group by days ORDER BY `days`  ASC'
@@ -693,6 +716,39 @@ def qinggan():
     jijilv=jiji_2/zong_2
     print(xiaoji_1/zong_1,xiaoji_2/zong_2,jiji_1/zong_1,jiji_2/zong_2)
     return render_template('daping/qinggan.html',xiaojilv=round(xiaojilv,5),jijilv=round(jijilv,5),title=title,hotchange=hotchange,qgfb=qgfb,qgfb_cs=qgfb_cs,chengshi=chengshi,az=az,azz=azz)
+
+@app.route("/yuqing")
+def ech():
+    title = request.args.get('title')
+    db = MysqlUtil()
+
+    sql = f'select `城市`,count(`城市`) as t from bigevent WHERE title="{title}" group by `城市`'
+
+
+    articles = db.fetchall(sql)  # 获取多条记录
+    db = MysqlUtil()
+    sql_2=f'select date_format(`发布日期`, "%Y-%m-%d %H:%i") AS days,COUNT(1) AS total from bigevent WHERE title="{title}" group by days ORDER BY `days`  ASC'
+    hotchange = db.fetchall(sql_2)
+    sql_q = f'select `微博情绪`,count(`微博情绪`) as t from bigevent WHERE title="{title}" group by `微博情绪`'
+    db = MysqlUtil()
+    qgfb = db.fetchall(sql_q)
+    sql_y = f'select date_format(`发布日期`, "%Y-%m-%d") AS days,COUNT(1) AS total from bigevent WHERE title="{title}" group by days ORDER BY `days`  ASC'
+    db = MysqlUtil()
+    yqqx = db.fetchall(sql_y)
+    daysyu=[]
+    for i in range(len(yqqx)):
+        if (i==0):
+            kk=int(yqqx[i]['total'])
+            continue
+        if ((int(yqqx[i]['total'])-kk)/kk > 3):
+            daysyu.append(yqqx[i]['days'])
+
+
+        kk=int(yqqx[i]['total'])
+    return render_template('daping/yuqing.html',title=title,articles=articles[1:],hotchange=hotchange,qgfb=qgfb,daysyu=daysyu)
+
+
+
 
 @app.route("/uploud_file")
 def upload253523():
@@ -769,7 +825,10 @@ def file_download(filename):
 def upupup():
     return render_template('/upup/index.html')
 
-
+@app.route('/biaozhu')
+def biaozhu():
+    title = request.args.get('title')
+    return render_template('/SK2/biaozhu.html',title=title)
 
 
 
@@ -815,17 +874,34 @@ def update_line_data1():
     idxx = idxx + 0.7
     return jsonify({"name": round(idxx, 1), "value": kk, "suan": round(kk/idxx,1)})
 
+@app.route("/lineDynamicData2")
+def update_line_data2():
+    global kkkkk
+    global idxxx1
+    idxxx1 = idxxx1 + 0.7
+    global aIDID
+    global acomment
+    global pdqinggan
+    return jsonify({"name": round(idxxx1, 1), "value": kkkkk, "ID": aIDID,  "comment": acomment,  "pdqinggan": pdqinggan, "suan": round(kkkkk/idxxx1,1)})
+
+@app.route('/biaozhu1',methods=["GET", "POST"])
+def biaozhu1():
+    title = request.args.get('title')
+    sql_4= f'SELECT * FROM bigevent_withoutsim  where title="{title}" LIMIT 1000'
+    db = MysqlUtil()
+    articles = db.fetchall(sql_4)
+    for i in range(len(articles)):
+        global aIDID
+        global kkkkk
+        kkkkk=i
+        global acomment
+        global pdqinggan
+        aIDID=articles[i]['ID']
+        acomment=articles[i]['全文内容']
+        pdqinggan=IsPoOrNeg(acomment)
+    return articles
+
 if __name__ == "__main__":
     app.run(debug = True,host='0.0.0.0',port=5555, threaded=True)
 
-# 按日期分热度
-# select
-#
-# 	date_format(publish_time, '%Y-%m-%d') AS days,
-#     COUNT(1) AS total
-# from
-# 	weiboevents
-# WHERE title="张新成 受伤"
-# group by
-# 	days
-# order by days desc
+#     UPDATE `bigevent_withoutsim` SET `微博情绪` = '喜悦' WHERE `bigevent_withoutsim`.`ID` = 1

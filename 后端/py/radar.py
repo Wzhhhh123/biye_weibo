@@ -18,7 +18,6 @@ def radar(count_number):
     global ppp
     kk=dict(sss)
     entity_dict_1 = sorted(kk.items(), key=lambda x: x[1])
-    ppp="今天类型最多的是"+entity_dict_1[-1][0]+"所以可见今天人们更倾向于讨论"+entity_dict_1[-1][0]
     c = (
         Radar()
         .set_colors(["#4587E7"])
