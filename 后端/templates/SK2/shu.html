@@ -34,7 +34,8 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">主题事件数据</h6>
         <a class="collapse-item" href="/table/add">添加新事件</a>
-        <a class="collapse-item"  href="/table/events">现有事件</a>
+        <a class="collapse-item"  href="/table/events">现有爬取事件</a>
+        <a class="collapse-item"  href="/table/events_up">已上传事件</a>
       </div>
     </div>
   </li>
@@ -53,7 +54,20 @@
       </div>
     </div>
   </li>
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities1" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fas fa-fw fa-database"></i>
+      <span>数据上传分区</span>
+    </a>
+    <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">数据来源</h6>
+        <a class="collapse-item" href="/uploud_file">上传已有Csv文件</a>
+        <a class="collapse-item" href="/API">微博API接口</a>
 
+      </div>
+    </div>
+  </li>
   <!-- Divider -->
   <hr class="sidebar-divider">
 

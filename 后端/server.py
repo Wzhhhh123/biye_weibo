@@ -21,6 +21,11 @@ from py.graph import graph
 from py.forp import forpa,get_single_page1,parse_page1,parse_page_twice,parse_page_third
 from functools import wraps
 import random
+
+
+
+
+
 app = Flask(__name__, static_folder="templates")
 CORS(app, resources=r'/*')
 app.config["SECRET_KEY"] = '79537d00f4834892986f09a100aa1edf'
@@ -171,9 +176,17 @@ def indqwex():
     db = MysqlUtil()
     count_number = db.fetchall(sql_2)
     sql_6=f'SELECT count(`id`) as t FROM `weiboevents`'
+    sql_16=f'SELECT count(`id`) as t FROM `bigevent`'
+    sql_17=f'SELECT count(`id`) as t FROM `bigevent_withoutsim`'
+    db = MysqlUtil()
+    count_eventsnumber_1 = db.fetchall(sql_16)
+    db = MysqlUtil()
+    count_eventsnumber_2 = db.fetchall(sql_17)
+
     sql_7=f'SELECT count(`id`) as t FROM `weibohotpot`;'
     db = MysqlUtil()
     count_eventsnumber = db.fetchall(sql_6)
+    ttt=count_eventsnumber_1[0]['t']+count_eventsnumber_2[0]['t']+count_eventsnumber[0]['t']
     db = MysqlUtil()
     count_hotnumber = db.fetchall(sql_7)
     sql_8=f'SELECT count(`id`) as t FROM `weiboevents` WHERE gender="f"'
@@ -187,7 +200,7 @@ def indqwex():
     db = MysqlUtil()
     zhanbiCHI=round((db.fetchall(sql_10)[0]['t']/zhan_1)*100,1)
 
-    return render_template('SK2/index.html', articles=articles, page=int(page), numbers=count_number, count_eventsnumber=count_eventsnumber ,count_hotnumber=count_hotnumber,f=count_famale,m=count_male,chi=zhanbiCHI)  # 渲染模板
+    return render_template('SK2/index.html', articles=articles, page=int(page), numbers=count_number, ttt=ttt ,count_hotnumber=count_hotnumber,f=count_famale,m=count_male,chi=zhanbiCHI)  # 渲染模板
 
 @app.route('/table/events')
 def tableEvent():
@@ -200,6 +213,36 @@ def tableEvent():
     # 遍历文章数据
     return render_template('SK2/tables.html', articles=articles) # 渲染模板
 
+
+@app.route('/table/events_up')
+def tableEvent_UP():
+    sql_4="select (@id:=@id+1) as id,title,count(`id`) as t from bigevent,(SELECT @id:=0 )as id_temp group by title"
+    db = MysqlUtil()
+    articles = db.fetchall(sql_4)
+    for i in range(len(articles)):
+        articles[i]["id"]=int(articles[i]["id"])
+        sql_5="select (@id:=@id+1) as id,title,count(`id`) as t from bigevent_withoutsim,(SELECT @id:=0 )as id_temp group by title"
+    db = MysqlUtil()
+    es1 = db.fetchall(sql_5)
+    for i in range(len(es1)):
+        es1[i]["id"]=int(es1[i]["id"])
+    # 遍历文章数据
+    # 遍历文章数据
+    return render_template('SK2/tables_up.html', articles=articles,es1=es1) # 渲染模板
+@app.route('/table/detail_up')
+def tableEventdetail_UP():
+    title = request.args.get('title')
+    sql_4= f'SELECT * FROM bigevent  where title="{title}" LIMIT 100'
+    db = MysqlUtil()
+    articles = db.fetchall(sql_4)
+    return render_template('SK2/tablesdetail_up.html', articles=articles, title=title) # 渲染模板
+@app.route('/table/detail_up_withoutsim')
+def tableEventdetail_UP_wit():
+    title = request.args.get('title')
+    sql_4= f'SELECT * FROM bigevent_withoutsim  where title="{title}" LIMIT 100'
+    db = MysqlUtil()
+    articles = db.fetchall(sql_4)
+    return render_template('SK2/tablesdetail_up_wit.html', articles=articles, title=title) # 渲染模板
 @app.route('/table/detail')
 def tableEventdetail():
     title = request.args.get('title')
@@ -289,7 +332,23 @@ def paqu():
 
 
 
-
+def line_base1() -> Line:
+    line = (
+        Line()
+        .add_xaxis(["0.7,1.4,2,3,4"])
+        .add_yaxis(
+            series_name="上传数据动态图",
+            y_axis=["0"],
+            is_smooth=True,
+            label_opts=opts.LabelOpts(is_show=False),
+        )
+        .set_global_opts(
+            title_opts=opts.TitleOpts(title="动态数据"),
+            xaxis_opts=opts.AxisOpts(type_="value"),
+            yaxis_opts=opts.AxisOpts(type_="value"),
+        )
+    )
+    return line
 def line_base() -> Line:
     line = (
         Line()
@@ -318,7 +377,15 @@ def get_line_chart():
     global kkk
     kkk = 0
     return c.dump_options_with_quotes()
+@app.route("/lineChart1")
+def get_line_chart1():
+    c = line_base1()
+    global idxx
+    idxx = -0.6
 
+    global kk
+    kk = 0
+    return c.dump_options_with_quotes()
 
 
 
@@ -427,18 +494,18 @@ def graph1():
 def for_addfor():
 
     wid = request.args.get('wid')
-
+    flash12 = ""
     if wid == "" or wid == None:
         ll = "SK2/forword_add.html"
-        flash="请输入mid"
+        flash12="请输入mid"
     elif len(wid) == 9 or len(wid) == 16:
 
         ll = "SK2/forword_add_pa.html"
     else:
         print(len(wid))
-        flash="请检查mid是否正确"
+        flash12="请检查mid是否正确"
         ll = "SK2/forword_add.html"
-    return render_template(ll,flash=flash,wid=wid)
+    return render_template(ll,flash12=flash12,wid=wid)
 
 @app.route('/addf',methods=["GET", "POST"])
 def addfor():
@@ -535,12 +602,236 @@ def daoru2():
         db.insert(sql)
     return jsonify({"name": wid, "value": kk})
 
+
+
 @app.route("/echart")
 def echart():
     title = request.args.get('title')
-    return render_template('daping/index.html',title=title)
+    db = MysqlUtil()
+    sql = f'select status_province,count(status_province) as t from weiboevents WHERE title="{title}" group by status_province'
+    articles = db.fetchall(sql)  # 获取多条记录
+    db = MysqlUtil()
+    sql_2=f'select date_format(publish_time, "%Y-%m-%d %H:%i") AS days,COUNT(1) AS total from weiboevents WHERE title="{title}" group by days ORDER BY `days`  ASC'
+    hotchange = db.fetchall(sql_2)
 
+
+    return render_template('daping/index.html',title=title,articles=articles[1:],hotchange=hotchange)
+
+@app.route("/echart_big")
+def echart_big():
+    title = request.args.get('title')
+    db = MysqlUtil()
+
+    sql = f'select `城市`,count(`城市`) as t from bigevent WHERE title="{title}" group by `城市`'
+
+
+    articles = db.fetchall(sql)  # 获取多条记录
+    db = MysqlUtil()
+    sql_2=f'select date_format(`发布日期`, "%Y-%m-%d %H:%i") AS days,COUNT(1) AS total from bigevent WHERE title="{title}" group by days ORDER BY `days`  ASC'
+    hotchange = db.fetchall(sql_2)
+    sql_q = f'select `微博情绪`,count(`微博情绪`) as t from bigevent WHERE title="{title}" group by `微博情绪`'
+    db = MysqlUtil()
+    qgfb = db.fetchall(sql_q)
+
+    return render_template('daping/index_big.html',title=title,articles=articles[1:],hotchange=hotchange,qgfb=qgfb)
+
+@app.route("/qinggan")
+def qinggan():
+    chengshi = request.args.get('chengshi')
+    title = request.args.get('title')
+    db = MysqlUtil()
+    sql_2=f'select date_format(`发布日期`, "%Y-%m-%d %H:%i") AS days,COUNT(1) AS total from bigevent WHERE title="{title}" group by days ORDER BY `days`  ASC'
+    hotchange = db.fetchall(sql_2)
+    sql_q = f'select `微博情绪`,count(`微博情绪`) as t from bigevent WHERE title="{title}" group by `微博情绪`'
+    db = MysqlUtil()
+    qgfb = db.fetchall(sql_q)
+
+    sql_cs=f'select `微博情绪`,count(`微博情绪`) as t from bigevent WHERE title="{title}" AND `城市`="{chengshi}" group by `微博情绪`'
+    db = MysqlUtil()
+    qgfb_cs = db.fetchall(sql_cs)
+    zong_1=0
+    jiji_1=0
+    xiaoji_1=0
+    zong_2=0
+    jiji_2=0
+    xiaoji_2=0
+    for i in qgfb:
+        zong_1+=i['t']
+        if i['微博情绪']=='喜悦':
+            jiji_1+=i['t']
+        if i['微博情绪']=='恐惧':
+            xiaoji_1+=i['t']
+        if i['微博情绪']=='悲伤':
+            xiaoji_1+=i['t']
+        if i['微博情绪']=='惊奇':
+            jiji_1+=i['t']
+        if i['微博情绪']=='愤怒':
+            xiaoji_1+=i['t']
+    for i in qgfb_cs:
+        zong_2+=i['t']
+        if i['微博情绪']=='喜悦':
+            jiji_2+=i['t']
+        if i['微博情绪']=='恐惧':
+            xiaoji_2+=i['t']
+        if i['微博情绪']=='悲伤':
+            xiaoji_2+=i['t']
+        if i['微博情绪']=='惊奇':
+            jiji_2+=i['t']
+        if i['微博情绪']=='愤怒':
+            xiaoji_2+=i['t']
+    if (jiji_2/zong_2 < jiji_1/zong_1):
+
+        az="偏悲观"
+        azz="急需监控是否可能发生舆情事件"
+    elif (xiaoji_2/zong_2 < xiaoji_1/zong_1):
+
+        az="偏乐观"
+        azz="不易发生舆情事件"
+    else:
+         az="既不乐观也不悲观"
+         azz="需要后续急需观察"
+    if (jiji_2 == xiaoji_2):
+
+        az="既不乐观也不悲观"
+        azz="需要后续急需观察"
+
+    xiaojilv=xiaoji_2/zong_2
+    jijilv=jiji_2/zong_2
+    print(xiaoji_1/zong_1,xiaoji_2/zong_2,jiji_1/zong_1,jiji_2/zong_2)
+    return render_template('daping/qinggan.html',xiaojilv=round(xiaojilv,5),jijilv=round(jijilv,5),title=title,hotchange=hotchange,qgfb=qgfb,qgfb_cs=qgfb_cs,chengshi=chengshi,az=az,azz=azz)
+
+@app.route("/uploud_file")
+def upload253523():
+     return render_template('elel/upup.html')
+
+
+
+
+
+
+
+
+
+@app.route('/checkChunk', methods=['POST'])
+def checkChunk():
+    return jsonify({'ifExist':False})
+
+
+@app.route('/mergeChunks', methods=['POST'])
+def mergeChunks():
+    fileName=request.form.get('fileName')
+
+    md5=request.form.get('fileMd5')
+    chunk = 0  # 分片序号
+    with open(u'./upload/{}'.format(fileName), 'wb') as target_file:  # 创建新文件
+        while True:
+            try:
+                filename = './upload/{}-{}'.format(md5, chunk)
+                source_file = open(filename, 'rb')  # 按序打开每个分片
+                target_file.write(source_file.read())  # 读取分片内容写入新文件
+                source_file.close()
+            except:
+                break
+            chunk += 1
+            os.remove(filename)  # 删除该分片，节约空间
+    return jsonify({'upload':True})
+
+
+@app.route('/upload', methods=['POST'])
+def upload():  # 接收前端上传的一个分片
+    md5=request.form.get('fileMd5')
+    chunk_id=request.form.get('chunk',0,type=int)
+    filename = '{}-{}'.format(md5,chunk_id)
+    upload_file = request.files['file']
+    upload_file.save('./upload/{}'.format(filename))
+
+    return jsonify({'upload_part':True})
+
+
+
+@app.route('/file/list', methods=['GET'])
+def file_list():
+    files = os.listdir('./upload/')  # 获取文件目录
+    files = map(lambda x: x if isinstance(x, unicode) else x.decode('utf-8'), files)  # 注意编码
+    return render_template('./list.html', files=files)
+
+
+@app.route('/file/download/<filename>', methods=['GET'])
+def file_download(filename):
+
+    def send_chunk():  # 流式读取
+        store_path = './upload/%s' % filename
+
+        with open(store_path, 'rb') as target_file:
+            while True:
+                chunk = target_file.read(200000000 * 1024 * 1024)
+                if not chunk:
+                    break
+                yield chunk
+
+    return Response(send_chunk(), content_type='application/octet-stream')
+
+@app.route('/upupup', methods=['GET'])
+def upupup():
+    return render_template('/upup/index.html')
+
+
+
+
+
+@app.route('/daorubig', methods=['POST', 'GET'])
+def daorubig():
+    global kk
+    name = request.args.get('name')
+    try:
+        with open('upload/'+name, 'r',encoding='gb18030', errors='ignore') as read_obj:
+            csv_reader = csv.reader(read_obj)
+            list_of_csv = list(csv_reader)
+    except:
+        return jsonify("上传失败")
+    if (len(list_of_csv[0])==10):
+        for kk in range(len(list_of_csv)-1):
+            kk = kk + 1
+
+            sql = "INSERT INTO `bigevent_withoutsim` ( `标题／微博内容`, `信息属性`, `原创/转发`, `地址`, `媒体名称`, `发布日期`, `媒体类型`, `地域`, `全文内容`, `精准地域`,`title`)  \
+                               VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')"\
+                            % (list_of_csv[kk][0],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4],\
+                               list_of_csv[kk][5],list_of_csv[kk][6],list_of_csv[kk][7],list_of_csv[kk][8],list_of_csv[kk][9],name)
+
+            db = MysqlUtil()
+            db.insert(sql)
+    if (len(list_of_csv[0])>10):
+        for kk in range(len(list_of_csv)-1):
+            kk = kk + 1
+
+            sql = "INSERT INTO `bigevent` ( `标题／微博内容`, `信息属性`, `原创/转发`, `发布日期`, `原微博内容`, `认证类型`, `地域`, `城市`, `性别`, `全文内容`, `粉丝数`, \
+            `微博数`, `转`, `评`, `赞`, `话题`, `微博情绪`, `精准地域`, `中图地址`, `title`)  \
+                               VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s')"\
+                            % (list_of_csv[kk][0],list_of_csv[kk][1],list_of_csv[kk][2],list_of_csv[kk][3],list_of_csv[kk][4],list_of_csv[kk][5],list_of_csv[kk][6],\
+                               list_of_csv[kk][7],list_of_csv[kk][8],list_of_csv[kk][9],list_of_csv[kk][10],list_of_csv[kk][11],list_of_csv[kk][12],list_of_csv[kk][13],list_of_csv[kk][14],list_of_csv[kk][15],list_of_csv[kk][16],list_of_csv[kk][17],list_of_csv[kk][18],name)
+
+            db = MysqlUtil()
+            db.insert(sql)
+    return jsonify({"name": name, "value": kk})
+
+@app.route("/lineDynamicData1")
+def update_line_data1():
+    global kk
+    global idxx
+    idxx = idxx + 0.7
+    return jsonify({"name": round(idxx, 1), "value": kk, "suan": round(kk/idxx,1)})
 
 if __name__ == "__main__":
-    app.run(debug = True,host='0.0.0.0',port=5555)
+    app.run(debug = True,host='0.0.0.0',port=5555, threaded=True)
 
+# 按日期分热度
+# select
+#
+# 	date_format(publish_time, '%Y-%m-%d') AS days,
+#     COUNT(1) AS total
+# from
+# 	weiboevents
+# WHERE title="张新成 受伤"
+# group by
+# 	days
+# order by days desc

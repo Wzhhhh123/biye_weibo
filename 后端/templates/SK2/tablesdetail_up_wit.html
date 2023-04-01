@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>{{ title }} - 事件</title>
+
+  <!-- Custom fonts for this template -->
+  <link href="/templates/SK2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/templates/SK2/css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="/templates/SK2/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+
+    {% include '/SK2/shu.html' %}
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        {% include '/SK2/heng.html' %}
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">{{ title }}</h1>
+          <div style="position: absolute;margin-left: 220px;margin-top: -2px">
+          <a href="/download1?event={{title}}" class="btn btn-info btn-icon-split">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-download"></i>
+                    </span>
+            <span class="text">点击下载该事件CSV文件</span>
+          </a></div>
+          <p class="mb-4">微博事件-----<a target="_blank" href="https://s.weibo.com/weibo?q={{ title }}&t=31&band_rank=2&Refer=top%2F">事件微博地址</a>.</p>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">事件详细数据</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>标题／微博内容</th>
+                      <th>信息属性</th>
+                      <th>原创/转发</th>
+                      <th>发布日期</th>
+                      <th>地域</th>
+                      <th>媒体名称</th>
+
+                      <th>全文内容</th>
+                      <th>媒体类型</th>
+
+                      <th>地址</th>
+                      <th>微博情绪</th>
+                      <th>精准地域</th>
+
+                      <th>文件名</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for article in articles %}
+                  <tr>
+                    <td>{{article.ID}}</td>
+                    <td>{{article['标题／微博内容'][0:100]}}</td>
+                    <td>{{article.信息属性}}</td>
+                    <td>{{article['原创/转发']}}</td>
+                    <td>{{article.发布日期}}</td>
+                    <td>{{article.地域}}</td>
+                    <td>{{article.媒体名称}}</td>
+                    <td>{{article.全文内容[0:100]}}</td>
+                    <td>{{article.媒体类型}}</td>
+                    <td>{{article.地址[0:10]}}</td>
+                    <td>未标签</td>
+                    <td>{{article.精准地域}}</td>
+
+                    <td>{{article.title}}</td>
+
+                  </tr>
+                  {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019 - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/templates/SK2/vendor/jquery/jquery.min.js"></script>
+  <script src="/templates/SK2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/templates/SK2/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/templates/SK2/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/templates/SK2/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/templates/SK2/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="/templates/SK2/js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>
