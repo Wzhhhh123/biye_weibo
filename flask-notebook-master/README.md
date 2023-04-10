@@ -78,7 +78,7 @@ CREATE TABLE articles(
     title varchar(255) DEFAULT NULL,
    	content text,
     author varchar(255) DEFAULT NULL,
-    crate_date datetime DEFAULT NULL,
+    create_date datetime DEFAULT NULL,
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```

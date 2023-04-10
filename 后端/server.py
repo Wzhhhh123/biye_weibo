@@ -22,6 +22,7 @@ from py.forp import forpa,get_single_page1,parse_page1,parse_page_twice,parse_pa
 from functools import wraps
 import random
 from py.moxing.ceshi import IsPoOrNeg
+from py.uploadre.upload import main1
 
 
 app = Flask(__name__, static_folder="templates")
@@ -165,6 +166,11 @@ def indqwex():
     sql_2 = f'select create_date,count(create_date) as t from weibohotpot group by create_date'
 #     sql = f'SELECT * FROM weibohotpot  ORDER BY create_date DESC LIMIT {(int(page) - 1) * count},{count}'
     articles = db.fetchall(sql)  # 获取多条记录
+    if (articles==()):
+        main1()
+        db = MysqlUtil()
+        sql = f'SELECT * FROM weibohotpot  where create_date="{kk}"'
+        articles = db.fetchall(sql)
     db = MysqlUtil()
     count_number = db.fetchall(sql_2)
     sql_6=f'SELECT count(`id`) as t FROM `weiboevents`'
@@ -174,7 +180,6 @@ def indqwex():
     count_eventsnumber_1 = db.fetchall(sql_16)
     db = MysqlUtil()
     count_eventsnumber_2 = db.fetchall(sql_17)
-
     sql_7=f'SELECT count(`id`) as t FROM `weibohotpot`;'
     db = MysqlUtil()
     count_eventsnumber = db.fetchall(sql_6)
@@ -696,6 +701,7 @@ def qinggan():
             jiji_2+=i['t']
         if i['微博情绪']=='愤怒':
             xiaoji_2+=i['t']
+
     if (jiji_2/zong_2 < jiji_1/zong_1):
 
         az="偏悲观"
