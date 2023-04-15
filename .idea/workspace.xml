@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7fec5305-214d-4836-a068-62c5e7e648ed" name="变更" comment="" />
+    <list default="true" id="7fec5305-214d-4836-a068-62c5e7e648ed" name="变更" comment="">
+      <change afterPath="$PROJECT_DIR$/后端/20230411.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/后端/None.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/后端/初代跑男重聚.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/后端/大家记得吃汤圆[元宵....json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/后端/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/后端/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/后端/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/后端/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/后端/肖战工作室.json" beforeDir="false" afterPath="$PROJECT_DIR$/后端/肖战工作室.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,6 +18,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Kr4FISQhGwCdTWfmdf0RV0K9Tl" />
   <component name="ProjectViewState">
@@ -30,7 +42,11 @@
       <option name="presentableId" value="Default" />
       <updated>1674719263070</updated>
       <workItem from="1674719264222" duration="10000" />
+      <workItem from="1681439866248" duration="2443000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

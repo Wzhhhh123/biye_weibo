@@ -150,7 +150,7 @@ def radar1():
 
 
 @app.route('/DH')
-# @is_logged_in
+#@is_logged_in
 def indqwex():
     db = MysqlUtil()  # 实例化数据库操作类
     page = request.args.get('page')  # 获取当前页码
