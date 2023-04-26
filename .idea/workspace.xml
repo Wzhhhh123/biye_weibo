@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7fec5305-214d-4836-a068-62c5e7e648ed" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/后端/20230411.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/后端/None.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/后端/初代跑男重聚.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/后端/大家记得吃汤圆[元宵....json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/后端/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/后端/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/后端/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/后端/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/后端/肖战工作室.json" beforeDir="false" afterPath="$PROJECT_DIR$/后端/肖战工作室.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/后端/templates/SK2/biaozhu.html" beforeDir="false" afterPath="$PROJECT_DIR$/后端/templates/SK2/biaozhu.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +29,10 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
@@ -43,6 +45,7 @@
       <updated>1674719263070</updated>
       <workItem from="1674719264222" duration="10000" />
       <workItem from="1681439866248" duration="2443000" />
+      <workItem from="1682470492133" duration="1355000" />
     </task>
     <servers />
   </component>

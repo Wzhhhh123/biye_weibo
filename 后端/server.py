@@ -527,7 +527,6 @@ def for_addfor():
 
         ll = "SK2/forword_add_pa.html"
     else:
-        print(len(wid))
         flash12="请检查mid是否正确"
         ll = "SK2/forword_add.html"
     return render_template(ll,flash12=flash12,wid=wid)
@@ -907,6 +906,12 @@ def biaozhu1():
         pdqinggan=IsPoOrNeg(acomment)
     return articles
 
+@app.route('/biaozhu2',methods=["GET", "POST"])
+def biaozhu2():
+    title = request.args.get('title')
+
+    pdqinggan=IsPoOrNeg(title)
+    return {"qg":pdqinggan}
 if __name__ == "__main__":
     app.run(debug = True,host='0.0.0.0',port=5555, threaded=True)
 

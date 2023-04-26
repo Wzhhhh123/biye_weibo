@@ -307,7 +307,51 @@
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">标注情绪------"""<a style="color: #4eb3df">{{title}}</a>"""</h1>
           <p class="mb-4">正在标注情绪，情绪会不断显示在下方控件中，并在上方形成可视化进度</p>
+          <div style="position: relative;margin-left: 580px;margin-top: -55px">
+            <a  target="_blank" href=""><li class="nav-item dropdown no-arrow mx-1 " style="list-style: none">
+              <a class="nav-link dropdown-toggle" style="padding-left:0px" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i  class="fas fa-bell fa-fw " >点此测试模型</i>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu  shadow animated--grow-in" style="" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  弹出框
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div style="width: 200px">
+                    <div class="small text-gray-500">测试模型</div>
+                    <div class="input-group">
+                      <input id="wid" type="text"  class="form-control bg-light border-0 small" placeholder="输入需要判断情感的语句" aria-label="Search" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                          <i class="fas fa-paper-plane fa-sm"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" type="button" id="gogo" style="width: 50%">
+                  <div>
+                    <div class="input-group-append">
 
+                    </div>
+                    <span  style="font-size: 15px;padding-left: 40px"> 确 定</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" style="position: absolute;right: 0px;bottom: 8px;font-size: 15px;padding-left: 40px;width: 50%" href="#">
+                  <div>
+                    <span  >取消</span>
+                  </div>
+                </a>
+              </div>
+            </li></a>
+
+          </div>
 
 
           <div class="card bg-danger text-white shadow" style="position: absolute;margin-top: 50px;margin-left: 780px;width: 250px;height: 180px">
@@ -566,7 +610,54 @@
 
     }
   </script>
+<script>
+  function showMessage(txt){
+    // document.getElementById('right_bottom').classList.add('hide');
 
+    this.timer && clearTimeout(this.timer);
+    var oDiv = document.getElementById('messageInfo');
+    if(!oDiv){
+      oDiv = document.createElement('div');
+      oDiv.className = 'messageInfo';
+      oDiv.id = 'messageInfo';
+
+
+
+
+
+
+      document.getElementById('content').appendChild(oDiv);
+    }
+    oDiv.innerHTML = '<div id="odiv" class="m-0 font-weight-bold text-primary" style="width: 350px;position: absolute;height: 100px;left: 564px;top: 258px;font-size: 30px">'+'<span>'+txt+'</span>'+'</div>';
+    oDiv.classList.remove('hide');//默认是显示
+    this.timer =
+            setTimeout(function(){
+              document.getElementById('odiv').style.visibility="hidden"
+              // var t = document.getElementById("right_bottom");
+              // t.classList.remove('hide');//2s后隐藏
+            },2000)
+  }
+  let btn11=document.getElementById('gogo');
+  btn11.addEventListener("click",hello1);
+  function hello1(){
+    var ww = document.getElementById('wid').value
+    $.ajax({
+      type: "GET",
+      url: "/biaozhu2?title="+ww,
+      dataType: "json",
+      success: function (result) {
+
+        showMessage(result.qg)
+      }
+    });
+
+
+
+
+
+  }
+
+</script>
   <!-- Page level custom scripts -->
   <script src="/templates/SK2/js/demo/datatables-demo.js"></script>
 </body>
