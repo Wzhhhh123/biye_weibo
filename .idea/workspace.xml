@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7fec5305-214d-4836-a068-62c5e7e648ed" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/代码/Untitled.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/代码/Untitled.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/o_理科论文格式样板 2.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/后端/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/后端/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/后端/upload/上海首个小区停用丰巢快递柜.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/魏志豪----一种面向微博主题的自动画像系统.docx" beforeDir="false" afterPath="$PROJECT_DIR$/魏志豪----一种面向微博主题的自动画像系统.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +35,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
@@ -44,7 +48,13 @@
       <updated>1674719263070</updated>
       <workItem from="1674719264222" duration="10000" />
       <workItem from="1681439866248" duration="2443000" />
-      <workItem from="1682470492133" duration="3127000" />
+      <workItem from="1682470492133" duration="3712000" />
+      <workItem from="1682575580491" duration="640000" />
+      <workItem from="1682582006738" duration="1849000" />
+      <workItem from="1682598942945" duration="6929000" />
+      <workItem from="1682693939502" duration="649000" />
+      <workItem from="1682743855213" duration="555000" />
+      <workItem from="1682747463387" duration="3934000" />
     </task>
     <servers />
   </component>
