@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7fec5305-214d-4836-a068-62c5e7e648ed" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/o_理科论文格式样板 2.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/后端/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/后端/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/后端/upload/上海首个小区停用丰巢快递柜.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/魏志豪----一种面向微博主题的自动画像系统.docx" beforeDir="false" afterPath="$PROJECT_DIR$/魏志豪----一种面向微博主题的自动画像系统.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +51,7 @@
       <workItem from="1682693939502" duration="649000" />
       <workItem from="1682743855213" duration="555000" />
       <workItem from="1682747463387" duration="3934000" />
+      <workItem from="1683171259140" duration="1205000" />
     </task>
     <servers />
   </component>
