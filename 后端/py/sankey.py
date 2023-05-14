@@ -8,6 +8,7 @@ def sankey(title):
     sql_3 = f'SELECT * FROM weiboforword where title="{title}"'
     db = MysqlUtil()
     count_number = db.fetchall(sql_3)
+
     kk=[]
     # 数据库方式
     for row in count_number:
@@ -80,4 +81,5 @@ def sankey(title):
         )
 
     )
+
     return c

@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7fec5305-214d-4836-a068-62c5e7e648ed" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/后端/py/sankey.py" beforeDir="false" afterPath="$PROJECT_DIR$/后端/py/sankey.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/后端/肖战工作室.json" beforeDir="false" afterPath="$PROJECT_DIR$/后端/肖战工作室.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/成稿/新/数据驱动的网络舆情监控系统的框架研究与设计.docx" beforeDir="false" afterPath="$PROJECT_DIR$/成稿/新/数据驱动的网络舆情监控系统的框架研究与设计.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +55,7 @@
       <workItem from="1682743855213" duration="555000" />
       <workItem from="1682747463387" duration="3934000" />
       <workItem from="1683171259140" duration="1205000" />
+      <workItem from="1684030850205" duration="3220000" />
     </task>
     <servers />
   </component>
