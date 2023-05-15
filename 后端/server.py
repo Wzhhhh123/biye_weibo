@@ -23,8 +23,8 @@ from functools import wraps
 import random
 from py.moxing.ceshi import IsPoOrNeg
 from py.uploadre.upload import main1
-
-
+from py.word import wordcount1
+from py.LDA import LDA_1
 app = Flask(__name__, static_folder="templates")
 CORS(app, resources=r'/*')
 app.config["SECRET_KEY"] = '79537d00f4834892986f09a100aa1edf'
@@ -640,7 +640,22 @@ def echart():
 
 
     return render_template('daping/index.html',title=title,articles=articles[1:],hotchange=hotchange)
+@app.route('/wordcounts_1',methods=["GET", "POST"])
+def ordcounts():
+    title = request.args.get('title')
+    sql_word = f'SELECT 全文内容 FROM bigevent WHERE 1 limit 300;'
+    db = MysqlUtil()
+    sql_word1 = db.fetchall(sql_word)
+    return wordcount1(sql_word1).dump_options_with_quotes()
+@app.route('/LDAAA',methods=["GET", "POST"])
+def sLDA():
+    title = request.args.get('title')
+    sql_word = f'SELECT 全文内容 FROM bigevent WHERE 1 limit 300;'
+    db = MysqlUtil()
+    sql_word1 = db.fetchall(sql_word)
+    kda=LDA_1(sql_word1)
 
+    return {"z1":kda[0],"z2":kda[1],"z3":kda[2]}
 @app.route("/echart_big")
 def echart_big():
     title = request.args.get('title')
@@ -759,7 +774,9 @@ def ech():
 def upload253523():
      return render_template('elel/upup.html')
 
-
+@app.route("/ut")
+def upload25352qw3():
+     return render_template('SK2/utilities-other.html')
 
 
 

@@ -21,7 +21,9 @@ $(document).ready(function(){
 });
 	});
 	</script>
-	<script type="text/javascript" src="/templates/daping/js/echarts.min.js"></script>
+<!--	<script type="text/javascript" src="/templates/daping/js/echarts.min.js"></script>-->
+    <script type="text/javascript" src="/templates/daping/js/echarts.min"></script>
+    <script type="text/javascript" src="/templates/daping/js/echarts-wordcloud.min"></script>
 	<script language="JavaScript">
 
       $(function () {
@@ -890,13 +892,23 @@ var t = null;
         <div class="boxfoot"></div>
       </div>
       <div class="boxall" style="height: 3.2rem">
-        <div class="alltitle">模块标题样式</div>
-        <div class="allnav" id="echart5"></div>
+        <div class="alltitle">主题词分析</div>
+        <div class="allnav" id="echart5" style="position: absolute;display: none"></div>
+        <div class="allnav"  >
+          <h1 style="color: white" id="LDA1">正在建模中...</h1>
+          <h2 style="color: white" id="LDA4"></h2>
+          <h1 style="color: white" id="LDA2" ></h1>
+          <h2 style="color: white" id="LDA5"></h2>
+          <h1 style="color: white" id="LDA3" ></h1>
+          <h2 style="color: white" id="LDA6"></h2>
+
+        </div>
         <div class="boxfoot"></div>
       </div>
       <div class="boxall" style="height: 3rem">
-        <div class="alltitle">模块标题样式</div>
-        <div class="allnav" id="echart6"></div>
+
+        <div class="allnav" id="echart6" style="position: absolute;display: none"></div>
+        <div id="bar1" style="width:100%; height:100%"></div>
         <div class="boxfoot"></div>
       </div>
     </li>
@@ -1254,6 +1266,46 @@ var t = null;
 
   })
 
+
+</script>
+<script>
+  $(
+          function () {
+            var chart = echarts.init(document.getElementById('bar1'), {renderer: 'canvas'});
+            $.ajax({
+              type: "GET",
+              url: "/wordcounts_1?title={{title}}",
+              dataType: 'json',
+              success: function (result) {
+                chart.setOption(result);
+              }
+            });
+          }
+  )
+  $(
+          function () {
+
+            $.ajax({
+              type: "GET",
+              url: "/LDAAA?title={{title}}",
+              dataType: 'json',
+              success: function (result) {
+                var s = document.getElementById('LDA1')
+                s.innerHTML="主题词1"
+                var s = document.getElementById('LDA2')
+                s.innerHTML="主题词2"
+                var s = document.getElementById('LDA3')
+                s.innerHTML="主题词3"
+                var s = document.getElementById('LDA4')
+                s.innerHTML=result.z1
+                var s = document.getElementById('LDA5')
+                s.innerHTML=result.z2
+                var s = document.getElementById('LDA6')
+                s.innerHTML=result.z3
+              }
+            });
+          }
+  )
 
 </script>
 </body>
