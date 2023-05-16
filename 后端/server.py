@@ -643,14 +643,14 @@ def echart():
 @app.route('/wordcounts_1',methods=["GET", "POST"])
 def ordcounts():
     title = request.args.get('title')
-    sql_word = f'SELECT 全文内容 FROM bigevent WHERE 1 limit 300;'
+    sql_word = f'SELECT 全文内容 FROM bigevent WHERE title="{title}" limit 300;'
     db = MysqlUtil()
     sql_word1 = db.fetchall(sql_word)
     return wordcount1(sql_word1).dump_options_with_quotes()
 @app.route('/LDAAA',methods=["GET", "POST"])
 def sLDA():
     title = request.args.get('title')
-    sql_word = f'SELECT 全文内容 FROM bigevent WHERE 1 limit 300;'
+    sql_word = f'SELECT 全文内容 FROM bigevent WHERE title="{title}" limit 300;'
     db = MysqlUtil()
     sql_word1 = db.fetchall(sql_word)
     kda=LDA_1(sql_word1)
