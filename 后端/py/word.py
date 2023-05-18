@@ -6,9 +6,14 @@ def wordcount1(resu) ->WordCloud:
     word_dict = {}
     for i in range(len(resu)):
         text = resu[i]['全文内容']
+        stop_words = []
+        with open('stopwords.txt', 'r', encoding='utf-8') as f:
+            for line in f.readlines():
+                stop_words.append(line.strip())
         seg_list = jieba.cut(text)
+        seg_list = [seg_list for seg_list in seg_list if len(seg_list) > 1 and seg_list not in stop_words]
         for word in seg_list:
-            if word !='，' and word != '、' and word != '的' and word != '。' and word != '“'  and word != '”'  and word != ' ':
+            if word !='，':
                 if word in word_dict:
                     word_dict[word] += 1
                 else:
