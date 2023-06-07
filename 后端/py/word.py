@@ -13,7 +13,7 @@ def wordcount1(resu) ->WordCloud:
         seg_list = jieba.cut(text)
         seg_list = [seg_list for seg_list in seg_list if len(seg_list) > 1 and seg_list not in stop_words]
         for word in seg_list:
-            if word !='，':
+            if word !='cn' and word !='http':
                 if word in word_dict:
                     word_dict[word] += 1
                 else:

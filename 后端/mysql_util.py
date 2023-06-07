@@ -9,7 +9,7 @@ class MysqlUtil():
         '''
             初始化方法，连接数据库
         '''
-        host = '127.0.0.1' # 主机名
+        host = 'localhost' # 主机名
         user = 'root'  # 数据库用户名
         password = 'Wzh010310'  # 数据库密码
         database = 'weibo'  # 数据库名称
